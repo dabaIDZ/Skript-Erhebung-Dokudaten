@@ -1947,6 +1947,15 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
             self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz, self.datenspeicher.codierung_dict_export_agg_relevanz, self.datenspeicher.genannt_agg_relevanz, self.datenspeicher.trennzeichen_liste_agg_relevanz, self.datenspeicher.genannt_markierung_leer_agg_relevanz, self.datenspeicher.genannt_markierung_zeichen_agg_relevanz, self.datenspeicher.genannt_markierung_zeichen_text_agg_relevanz, self.datenspeicher.genannt_markierung_nichtzeichen_agg_relevanz, self.datenspeicher.genannt_markierung_nichtzeichen_text_agg_relevanz)
 
         self.speichern()
+        msgbox = QMessageBox()
+        msgbox.setWindowTitle("Danke")
+        msgbox.setText("Die Auswertung ist nun abgeschlossen.\nBitte speichern Sie nun die Vorlage.\nDanach können Sie das Programm beenden.\n\nIhre nächsten Schritte sind:\n"
+                       "(1) Senden Sie uns die zip.Datei \"An IDZ senden\" per Email zu.\n(2) Beantworten Sie bitte die Fragen in der Online-Befragen.\n\n"
+                       "Vielen Dank für Ihre Zeit und Mitarbeit.\n"
+                       "Das Studien-Team des IDZ.")
+        msgbox.setStandardButtons(QMessageBox.Ok)
+
+        msgbox.exec_()
 
     def auswerten(self, dict_code_checkboxes_auswahl, codierung_dict_export, genannt, trennzeichen_liste, genannt_markierung_leer, genannt_markierung_zeichen, genannt_markierung_zeichen_text, genannt_markierung_nichtzeichen, genannt_markierung_nichtzeichen_text):
         # fasse alle vorgabe dict zu einem zusammen
