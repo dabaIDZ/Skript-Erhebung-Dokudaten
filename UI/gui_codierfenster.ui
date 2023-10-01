@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>fenster_codieren</class>
+ <widget class="QDialog" name="fenster_codieren">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>494</width>
+    <height>717</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Codieren</string>
+  </property>
+  <widget class="QTabWidget" name="tabwidg_inhalt">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>170</y>
+     <width>481</width>
+     <height>541</height>
+    </rect>
+   </property>
+   <property name="tabShape">
+    <enum>QTabWidget::Triangular</enum>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <property name="documentMode">
+    <bool>false</bool>
+   </property>
+   <property name="tabsClosable">
+    <bool>false</bool>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="tabBarAutoHide">
+    <bool>false</bool>
+   </property>
+   <widget class="QWidget" name="tab_spalten">
+    <attribute name="title">
+     <string>Spalten</string>
+    </attribute>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>441</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Bitte wählen Sie alle Spalten aus, in denen die Informationen gespeichert sind. Mit der Shift-Taste können Sie mehrere Spalten zugleich auswählen.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>70</y>
+       <width>451</width>
+       <height>261</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QListWidget" name="listWidget_Spalten">
+        <property name="selectionMode">
+         <enum>QAbstractItemView::ExtendedSelection</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="text_spaltenauswahl">
+        <property name="text">
+         <string>Folgende Spalten sind ausgewählt:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>330</y>
+       <width>451</width>
+       <height>124</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QCheckBox" name="check_Spalte_genannt">
+          <property name="text">
+           <string>Die Spalte(n) funktionieren nach dem Prinzip genannt/nicht genannt.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QPushButton" name="button_spaltenauswahl_speichern">
+          <property name="text">
+           <string>Weiter</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_details">
+    <attribute name="title">
+     <string>Details</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="tab_genanntmarkierungen">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <attribute name="title">
+     <string>Genannt-Markierung</string>
+    </attribute>
+    <widget class="QWidget" name="verticalLayoutWidget_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>17</y>
+       <width>418</width>
+       <height>491</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Bitte geben Sie an, wie in den Spalten die genannt Markierung zu erkennen ist.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_genannt_beispiele">
+        <property name="text">
+         <string>Wenn in den </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QRadioButton" name="radio_genannt_nichtleer">
+          <property name="text">
+           <string>Sobald die Spalte nicht leer ist, gilt die Spalte als genannt</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QRadioButton" name="radio_genannt_zeichen">
+          <property name="text">
+           <string>Sobald die Spalte folgende Zeichenfolge enthält, 
+gilt die Spalte als genannt</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="line_genannt_zeichen"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QRadioButton" name="radio_genannt_nichtzeichen">
+          <property name="text">
+           <string>Sobald die Spalte folgende Zeichenfolge nicht
+enthält, gilt die Spalte als genannt</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="line_genannt_nichtzeichen"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
+        <item>
+         <widget class="QPushButton" name="button_genanntmarkierung_speichern">
+          <property name="text">
+           <string>Weiter</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_trennzeichen">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <attribute name="title">
+     <string>Trennzeichen</string>
+    </attribute>
+    <widget class="QWidget" name="verticalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>441</width>
+       <height>481</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Wenn in den einzelnen Spalten Mehrfachantworten möglich sind, mit welchen Trennzeichen werden die einzelnen Antworten getrennt: </string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="lineEdit_trennzeichen3"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>Trennzeichen 3</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>Trennzeichen 1</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Trennzeichen 2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineEdit_trennzeichen2"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEdit_trennzeichen1"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>Es gibt keine Trennzeichen</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_trennzeichen_beispiele">
+        <property name="text">
+         <string>Wenn in den </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QPushButton" name="button_trennzeichenauswahl_speichern">
+          <property name="text">
+           <string>Weiter</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_codes_auswahl">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <attribute name="title">
+     <string>Codes</string>
+    </attribute>
+    <widget class="QWidget" name="verticalLayoutWidget_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>441</width>
+       <height>461</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Welche Informationen können Sie mit den angegebenen Spalten auslesen?</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_codes_liste">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_11">
+        <item>
+         <widget class="QPushButton" name="button_codeauswahl_speichern">
+          <property name="text">
+           <string>Weiter</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_codieren">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <attribute name="title">
+     <string>Daten codieren</string>
+    </attribute>
+    <widget class="QWidget" name="verticalLayoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>442</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Bitte codieren Sie hier die Werte aus ihrer Dokumentation anhand der Mindeststandards zur AD-Beratungsdokumentation.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="lbl_codetext">
+          <property name="text">
+           <string>Noch nicht ausgewählt</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="checkBox_codieren_codierteanzeigen">
+            <property name="text">
+             <string>Zeige codierte Elemente</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_codieren_uncodierteanzeigen">
+            <property name="text">
+             <string>Zeige nicht-codierte Elemente</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>444</width>
+       <height>291</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_codierung_ersteebene">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>430</y>
+       <width>440</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_13">
+      <item>
+       <widget class="QPushButton" name="button_zumersten">
+        <property name="text">
+         <string>|&lt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_rueckwaerts">
+        <property name="text">
+         <string>&lt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="line_codeakt_num">
+        <property name="contextMenuPolicy">
+         <enum>Qt::DefaultContextMenu</enum>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lbl_codieren_gesamtzahl">
+        <property name="text">
+         <string>/nan         </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_vorwaerts">
+        <property name="text">
+         <string>&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_zumletzten">
+        <property name="text">
+         <string>&gt;|</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>40</y>
+     <width>231</width>
+     <height>116</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="1">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Codes festlegen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QProgressBar" name="fortschritt_codieren">
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QProgressBar" name="fortschritt_details">
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QProgressBar" name="fortschritt_spalte">
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="lbl_fort_daten_cod">
+      <property name="text">
+       <string>Daten codieren</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="label_13">
+      <property name="text">
+       <string>Details klären</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Spalte auswählen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QProgressBar" name="fortschritt_codes">
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>471</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_12">
+    <item>
+     <widget class="QLabel" name="label_codierung_ueberschrift">
+      <property name="text">
+       <string>Codierung:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="button_OK">
+      <property name="text">
+       <string>Bearbeitung abschließen</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="button_spaltenauswahl_abbrechen">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>40</y>
+     <width>231</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Abbrechen</string>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>tabwidg_inhalt</tabstop>
+  <tabstop>lineEdit_trennzeichen1</tabstop>
+  <tabstop>lineEdit_trennzeichen2</tabstop>
+  <tabstop>lineEdit_trennzeichen3</tabstop>
+  <tabstop>checkBox_codieren_uncodierteanzeigen</tabstop>
+  <tabstop>checkBox_codieren_codierteanzeigen</tabstop>
+  <tabstop>button_trennzeichenauswahl_speichern</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>listWidget_Spalten</tabstop>
+  <tabstop>button_spaltenauswahl_speichern</tabstop>
+  <tabstop>check_Spalte_genannt</tabstop>
+  <tabstop>radio_genannt_nichtleer</tabstop>
+  <tabstop>radio_genannt_zeichen</tabstop>
+  <tabstop>line_genannt_zeichen</tabstop>
+  <tabstop>radio_genannt_nichtzeichen</tabstop>
+  <tabstop>line_genannt_nichtzeichen</tabstop>
+  <tabstop>button_genanntmarkierung_speichern</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
