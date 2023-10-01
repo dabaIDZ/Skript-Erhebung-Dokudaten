@@ -98,25 +98,38 @@ class Datenspeicher:
         self.dict_code_checkboxes_auswahl_lebensbereich = {}
         self.lebensbereich_codiert = False
         self.fortschritt_lebensbereiche = 0
+
+
         self.dict_lebensbereiche_vorgabe = { # dict mit den Vorgaben für die Codierung, Key: Oberbegriff, Value: Liste mit Unterpunkten
-            "Ämter / Behörden": ["Jobcenter/ Arbeitsagentur", "Ausländerbehörde", "Finanzamt", "Jugendamt",
-                                 "Standesamt", "Gewerbeamt", "Bürgeramt/ Einwohnermeldeamt", "anderes-Behörden"],
-            "Justiz / Polizei": ["Justiz", "Ordnungsamt", "Polizei", "anderes-Justiz/Polizei"],
-            "Arbeit": ["Beschäftigungsverhältnis", "Anbahnung/ Zugang zu Beschäftigungsverhältnis", "Arbeitsalltag",
-                       "Beendigung Arbeitsverhältnis", "anderes-Arbeit"],
-            "Bildung": ["Kita", "Schule", "Sonderpäd. Förderbedarf", "Hochschule", "Weiterbildung",
-                        "private Bildungseinrichtung", "anderes-Bildung"],
-            "Verkehr": ["Fernverkehr", "Nahverkehr", "Flugzeug", "Taxi", "Individualverkehr", "anderes-Verkehr"],
-            "Gesundheit": ["Krankenhaus", "Ärzt*innenpraxis", "Psychosoziale Einrichtung", "Pflegeeinrichtung",
-                           "Krankenversicherung", "anderes-Gesundheit"],
-            "Wohnen": ["Wohnungssuche", "bestehendes Wohnverhältnis", "anderes-Wohnen"],
-            "Privat und Freizeit": ["persönliches Umfeld", "öffentlicher Raum", "Verein", "religiöse Einrichtung",
-                                    "anderes - Privat/Freizeit"],
-            "Einzelhandel und Dienstleistungen": ["Geschäft", "Gastronomie", "Kultureinrichtung",
-                                                  "Nachtleben/Bar/Disko", "Finanzdienstleistung", "Hotel",
-                                                  "Post/ Lieferdienste", "anderes-Güter/Dienstleistungen"],
-            "Medien": ["Soziale Medien/ Netzwerke", "Onlinemedien", "Printmedien", "Fernsehen/ Radio", "Internet",
-                       "Werbung", "anderes-Medien"],
+            "Arbeit": ["Durchführung des Beschäftigungsverhältnisses",
+                       "Anbahnung/ Zugang zu einem Beschäftigungsverhältnis", "Arbeitsalltag",
+                       "Beendigung des Arbeitsverhältnisses", "anderes - Arbeit", "keine Angabe - Arbeit",
+                       "ignorieren - Arbeit"],
+            "Bildung": ["Kita", "Schule", "Sonderpädagogischer Förderbedarf", "Hochschule", "Weiterbildung",
+                        "private Bildungseinrichtung", "anderes - Bildung", "keine Angabe - Bildung",
+                        "ignorieren - Bildung"],
+            "Ämter und Behörden": ["Jobcenter/ Arbeitsagentur", "Ausländerbehörde", "Finanzamt", "Jugendamt",
+                                   "Standesamt", "Ordnungsamt", "Gewerbeamt", "Bürgeramt/ Einwohnermeldeamt",
+                                   "anderes - Behörden", "keine Angabe - Behörden", "ignorieren - Behörden"],
+            "Justiz und Polizei": ["Justiz", "Polizei", "anderes - Justiz und Polizei",
+                                   "keine Angabe - Justiz und Polizei", "ignorieren - Justiz und Polizei"],
+            "Güter und Dienstleistungen": ["Geschäft", "Gastronomie", "Fitnessstudio", "Kultureinrichtung",
+                                           "Nachtleben/ Bar/ Disko", "Finanzdienstleistung", "Hotel",
+                                           "Post/ Lieferdienste", "ÖPNV und Fernverkehr",
+                                           "anderes - Güter und Dienstleistungen",
+                                           "keine Angabe - Güter und Dienstleistungen",
+                                           "ignorieren - Güter und Dienstleistungen"],
+            "Wohnen": ["Wohnungssuche", "bestehendes Wohnverhältnis", "anderes - Wohnen", "keine Angabe - Wohnen",
+                       "ignorieren - Wohnen"],
+            "Gesundheit und Pflege": ["Krankenhaus", "Ärzt*innenpraxis", "Psychosoziale Einrichtung",
+                                      "Pflegeeinrichtung", "Krankenversicherung", "anderes - Gesundheit und Pflege",
+                                      "keine Angabe - Gesundheit und Pflege", "ignorieren - Gesundheit und Pflege"],
+            "Öffentlichkeit und Freizeit": ["persönliches Umfeld", "öffentlicher Raum", "Verein",
+                                            "religiöse Einrichtung", "anderes - Öffentlichkeit und Freizeit",
+                                            "keine Angabe - Öffentlichkeit und Freizeit",
+                                            "ignorieren - Öffentlichkeit und Freizeit"],
+            "Medien": ["Soziale Medien/ soziale Netzwerke", "Onlinemedien", "Printmedien", "Fernsehen/ Radio",
+                       "Internet", "Werbung", "anderes - Medien", "keine Angabe - Medien", "ignorieren - Medien"],
             "anderes - Lebensbereich": [],
             "keine Angabe - Lebensbereich": [],
             "ignorieren - Lebensbereich": []
@@ -128,16 +141,23 @@ class Datenspeicher:
         self.dict_code_checkboxes_auswahl_diskriminierungsmerkmale = {}
         self.diskriminierungsmerkmale_codiert = False
         self.fortschritt_diskriminierungsmerkmale = 0
-        self.dict_diskriminierungsmerkmale_vorgabe = { # dict mit den Vorgaben für die Codierung, Key: Oberbegriff, Value: Liste mit Unterpunkten
-            "Geschlecht": ["Frausein / Sexismus", "Mannsein", "Trans*sein/ Trans*Hintergrund", "Inter*sein",
-                           "Non-Binary", "anderes-Geschlecht"],
-            "Sexuelle Identität": ["lesbisch", "schwul", "bisexuell", "queer", "asexuell",
-                                   "anderes-Sexuelle Identität"],
-            "Lebensalter": ["hohes Alter", "geringes Alter", "anderes-Lebensalter"],
+        self.dict_diskriminierungsmerkmale_vorgabe = {
+            "Geschlecht": ["Frausein / Sexismus", "Mannsein", "Trans*sein/ Trans*Hintergrund", "Inter*sein", "Divers",
+                           "Non-Binary", "anderes - Geschlecht", "keine Angabe - Geschlecht",
+                           "ignorieren - Geschlecht"],
+            "Sexuelle Identität": ["lesbisch", "schwul", "bisexuell", "asexuell",
+                                   "anderes - Sexuelle Identität", "keine Angabe - Sexuelle Identität",
+                                   "ignorieren - Sexuelle Identität"],
+            "Lebensalter": ["hohes Alter", "geringes Alter", "anderes - Lebensalter", "keine Angabe - Lebensalter",
+                            "ignorieren - Lebensalter"],
             "Behinderung/ Chronische Erkrankung": ["Behinderung", "Chronische Erkrankung",
-                                                   "anderes - Behinderung/ Chronische Erkrankung"],
+                                                   "anderes - Behinderung/ Chronische Erkrankung",
+                                                   "keine Angabe - Behinderung/ Chronische Erkrankung",
+                                                   "ignorieren - Behinderung/ Chronische Erkrankung"],
             "Religion/ Weltanschauung": ["Buddhismus", "Christentum", "Hinduismus", "Islam", "Judentum",
-                                         "konfessionslos", "Weltanschauung", "anderes-Religion/ Weltanschauung"],
+                                         "konfessionslos", "Weltanschauung", "anderes - Religion/ Weltanschauung",
+                                         "keine Angabe - Religion/ Weltanschauung",
+                                         "ignorieren - Religion/ Weltanschauung"],
             "Antisemitismus, rassistische Zuschreibungen und (ethnische) Herkunft": ["Antimuslimischer Rassismus",
                                                                                      "Antischwarzer Rassismus",
                                                                                      "Rassismus gegen Rom*nja / Sinti*zze (Antiziganismus)",
@@ -148,12 +168,16 @@ class Datenspeicher:
                                                                                      "(zugeschriebene) Ethnische Herkunft",
                                                                                      "Staatsangehörigkeit", "Sprache",
                                                                                      "Antisemitismus",
-                                                                                     "anderes-Antisemitismus, Rassismus, (ethnische) Herkunft"],
-            "Sozioökonomischer Status": ["Bildung", "Einkommen", "Wohnsituation", "anderes-Sozioökonomischer Status"],
+                                                                                     "anderes - Antisemitismus, Rassismus, (ethnische) Herkunft",
+                                                                                     "keine Angabe - Antisemitismus, rassistische Zuschreibungen und (ethnische) Herkunft",
+                                                                                     "ignorieren - Antisemitismus, rassistische Zuschreibungen und (ethnische) Herkunft"],
+            "Sozialer Status": ["Bildung", "Einkommen", "Wohnsituation", "anderes - Sozialer Status",
+                                "keine Angabe - Sozialer Status", "ignorieren - Sozialer Status"],
             "anderes - Diskriminierungsmerkmal": [],
             "keine Angabe - Diskriminierungsmerkmal": [],
             "ignorieren - Diskriminierungsmerkmal": []
         }
+
         self.spalten_interventionsformen = []
         self.trennzeichen_liste_interventionsformen = []
         self.genannt_interventionsformen = False
@@ -161,12 +185,12 @@ class Datenspeicher:
         self.interventionsformen_codiert = False
         self.fortschritt_interventionsform = 0
         self.dict_interventionsformen_vorgabe = { # dict mit den Vorgaben für die Codierung, Key: Oberbegriff; keine Unterpunkte
-            "Nichtrechtliche Interventionen": ["Beratung", "andere - nichtrechtliche Interventionen"],
-            "Rechtliche, aber außergerichtliche Interventionen": [],
-            "gerichtliche Interventionen": [],
-            "anderes - Interventionsformen": [],
-            "keine Angabe - Interventionsformen": [],
-            "ignorieren - Interventionsformen": []
+        "Nicht-rechtliche Interventionen(über Beratung hinaus)": [],
+        "Rechtliche, aber außergerichtliche Interventionen": [],
+        "gerichtliche Interventionen": [],
+        "anderes - Interventionsformen": [],
+        "keine Angabe - Interventionsformen": [],
+        "ignorieren - Interventionsformen": []
         }
         self.spalten_diskriminierungsform = []
         self.trennzeichen_liste_diskriminierungsform = []
@@ -175,15 +199,14 @@ class Datenspeicher:
         self.diskriminierungsform_codiert = False
         self.fortschritt_diskriminierungsform = 0
         self.dict_diskriminierungsform_vorgabe = { # dict mit den Vorgaben für die Codierung, Key: Oberbegriff; keine Unterpunkte
-            "Verwehr von Zugang": [],
-            "Verwehr von gleichwertiger Bewertung, Leistung und Behandlung": [],
-            "Ausschluss von bestehender Teilhabe": [],
+            "Verwehr von Zugang / Ausschluss von bestehender Teilhabe": [],
+            "Verwehr von gleichwertiger Behandlung, Bewertung und Leistung": [],
             "Belästigung": [],
-            "Sexuelle Belästigung": [],
+            "Sexualisierte Belästigung": [],
             "Anweisung zur Diskriminierung": [],
             "Benachteiligung wegen einer Diskriminierungsbeschwerde/ Viktiminisierung": [],
             "Starftatbestand": [],
-            "Alltagsdiskriminierung / Grenzüberschreitungen / Mikroagressionen": [],
+            "Grenzüberschreitungen / Alltagsdiskriminierung / Mikroagressionen / Othering": [],
             "anderes - Diskriminierungsform": [],
             "keine Angabe - Diskriminierungsform": [],
             "ignorieren - Diskriminierungsform": []
