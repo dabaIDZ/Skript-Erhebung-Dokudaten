@@ -842,7 +842,7 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
     def beispiel_string_setzen(self, is_spalte_selected: bool):
         if is_spalte_selected:
             spalte = self.listWidget_zeitraum_spalten.selectedItems()[0].text()
-            beispiel = self.datenspeicher.df[spalte].iloc[0]
+            beispiel = self.datenspeicher.df_original[spalte].iloc[0]
             self.label_3.setText('Spalte: ' + spalte + ' --- Beispieleintrag: ' + beispiel)
         else:
             self.label_3.setText('Bitte wählen Sie eine Spalte aus')
@@ -860,8 +860,8 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
             self.datenspeicher.zeitraum_ende_txt = ""
             self.datenspeicher.zeitraum_inhalt_txt = ""
             self.datenspeicher.zeitraum_genau_txt = ""
-            self.datenspeicher.df = self.datenspeicher.df[
-                self.datenspeicher.df[self.datenspeicher.spalte_zeitraum].astype(str).apply(
+            self.datenspeicher.df = self.datenspeicher.df_original[
+                self.datenspeicher.df_original[self.datenspeicher.spalte_zeitraum].astype(str).apply(
                     lambda x: x.str.startswith(self.datenspeicher.zeitraum_beginn_txt)).any(axis=1)]
 
         if self.radio_zeitraum_ende.isChecked():
@@ -874,8 +874,8 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
             self.datenspeicher.zeitraum_ende_txt = self.text_zeitraum_ende.text().strip()
             self.datenspeicher.zeitraum_inhalt_txt = ""
             self.datenspeicher.zeitraum_genau_txt = ""
-            self.datenspeicher.df = self.datenspeicher.df[
-                self.datenspeicher.df[self.datenspeicher.spalte_zeitraum].astype(str).apply(
+            self.datenspeicher.df = self.datenspeicher.df_original[
+                self.datenspeicher.df_original[self.datenspeicher.spalte_zeitraum].astype(str).apply(
                     lambda x: x.str.endswith(self.datenspeicher.zeitraum_ende_txt)).any(axis=1)]
 
         if self.radio_zeitraum_inhalt.isChecked():
@@ -889,11 +889,11 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
             self.datenspeicher.zeitraum_inhalt_txt = self.text_zeitraum_inhalt.text().strip()
             self.datenspeicher.zeitraum_genau_txt = ""
             print("self.datenspeicher.spalte_zeitraum", self.datenspeicher.spalte_zeitraum)
-            print("self.datenspeicher.dfspalte_zeitraum", self.datenspeicher.df[self.datenspeicher.spalte_zeitraum])
+            print("self.datenspeicher.dfspalte_zeitraum", self.datenspeicher.df_original[self.datenspeicher.spalte_zeitraum])
             print("self.datenspeicher.zeitraum_inhalt_txt", self.datenspeicher.zeitraum_inhalt_txt)
-            print("Datentyp der Spalte:", type(self.datenspeicher.df[self.datenspeicher.spalte_zeitraum]))
-            self.datenspeicher.df = self.datenspeicher.df[
-                self.datenspeicher.df[self.datenspeicher.spalte_zeitraum].astype(str).apply(
+            print("Datentyp der Spalte:", type(self.datenspeicher.df_original[self.datenspeicher.spalte_zeitraum]))
+            self.datenspeicher.df = self.datenspeicher.df_original[
+                self.datenspeicher.df_original[self.datenspeicher.spalte_zeitraum].astype(str).apply(
                     lambda x: x.str.contains(self.datenspeicher.zeitraum_inhalt_txt)).any(axis=1)]
 
         if self.radio_zeitraum_genau.isChecked():
@@ -906,7 +906,7 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
             self.datenspeicher.zeitraum_ende_txt = ""
             self.datenspeicher.zeitraum_inhalt_txt = ""
             self.datenspeicher.zeitraum_genau_txt = self.text_zeitraum_genau.text().strip()
-            self.datenspeicher.df = self.datenspeicher.df[self.datenspeicher.df[
+            self.datenspeicher.df = self.datenspeicher.df_original[self.datenspeicher.df_original[
                                                               self.datenspeicher.spalte_zeitraum] == self.datenspeicher.zeitraum_genau_txt].dropna()
 
         if self.radio_zeitraum_irgendwas.isChecked():
@@ -919,8 +919,8 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
             self.datenspeicher.zeitraum_ende_txt = ""
             self.datenspeicher.zeitraum_inhalt_txt = ""
             self.datenspeicher.zeitraum_genau_txt = ""
-            self.datenspeicher.df = self.datenspeicher.df[
-                self.datenspeicher.df[self.datenspeicher.spalte_zeitraum].notna()]
+            self.datenspeicher.df = self.datenspeicher.df_original[
+                self.datenspeicher.df_original[self.datenspeicher.spalte_zeitraum].notna()]
         self.datenspeicher.zeitraum_ausgewaehlt = True
         self.frm_main.fortschritt_aktualisieren()
         print(self.datenspeicher.df)
@@ -1292,7 +1292,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
     def beispiel_string_setzen_genannt(self):
         spalte = self.tmp_spalten_auswahl[0]
         self.label_genannt_beispiele.setText(
-            'Beispiel: \nSpalte: ' + spalte + '\nZelleninhalt: ' + self.datenspeicher.df[spalte].iloc[0])
+            'Beispiel: \nSpalte: ' + spalte + '\nZelleninhalt: ' + self.datenspeicher.df_original[spalte].iloc[0])
 
     def beispiele_trennzeichen_aktualisieren(self):
         self.laengste_auspraegungen_str_spalten = self.spalteninhalt_laengste(anzahl=3, oneline=False)
