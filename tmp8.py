@@ -290,8 +290,9 @@ class Datenspeicher:
 class FRM_main(QMainWindow, Ui_MainWindow):
 
     # Initialisierung des Fensters ohne Daten
-    def __init__(self, datenspeicher):
+    def __init__(self, datenspeicher, app):
         super().__init__()
+        self.app = app
         self.setupUi(self)
         self.datenspeicher = datenspeicher
         self.gui_datengrundlage_einfach = None
@@ -318,9 +319,7 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         self.button_template_bearbeiten.clicked.connect(self.template_laden)
 
     def skript_schliessen(self):
-        self.gui_datengrundlage_einfach = FRM_fenster_ausfuellhinweise(self.datenspeicher, self)
-        self.gui_datengrundlage_einfach.show()
-        self.gui_datengrundlage_einfach.closeEvent = lambda event: self.on_datengrundlage_einfach_closed()
+        self.app.quit()
 
     # Verhalten beim Schließen der Fenster definieren
     def on_datengrundlage_einfach_closed(self):
@@ -2998,7 +2997,7 @@ class Application:
     def __init__(self):
         self.app = QApplication([])
         self.datenspeicher = Datenspeicher()
-        self.gui_MainWindow = FRM_main(self.datenspeicher)
+        self.gui_MainWindow = FRM_main(self.datenspeicher, self.app)
 
     def run(self):
         self.gui_MainWindow.show()
