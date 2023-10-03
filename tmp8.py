@@ -1,15 +1,4 @@
-# notwendige Gimmicks: Prüfen, ob Spalten mit Vorsilbe "XXX_XXX_" oder "XXX_YYY_" beginnen
-# Wenn Schule bei Code muss automatisch Bildung ausgewählt sein
-# Button OK Codierfenster unten hinlegen
-# Mehrfachauswahl mit Steuerung und Ziehen
-# codierfenster Spalten Breite der Spalten in Layout
-# Datum unbeding anders lösen als Regex
-# nur einen SPeicherort zur Verfügung
-# Wenn man nichts auswählt crasht die APP
 
-# Test Kommentar
-
-# imports
 import sys
 import copy
 import docx
@@ -1026,6 +1015,8 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         self.getrennte_code_elemente = ""  # Aufsplittung von Values aus dem Dictionaire dict_code_checkboxes
         self.spalteninhalt_als_liste = []  # kurzzeitiger Speicher des alten Spalteninhalts aber Mehrfachantworten als Liste codiert
 
+        self.codierte_keys = [list(key) for key in self.datenspeicher.codierdict_export.keys()]
+
     def event(self, event):  # Aktivieren des Mainfensters beim Schließen
         if event.type() == QtCore.QEvent.Close:
             self.frm_main.enable_frm_main()
@@ -1783,7 +1774,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
 
     def codierliste_gesamt_initialisieren(self):
         self.codierliste = {}
-        keys_as_list = [list(key) for key in self.datenspeicher.codierdict_export.keys()]
+        keys_as_list = self.codierte_keys
 
         if self.genannt == True:
             self.codierliste = self.spalten_auswahl
