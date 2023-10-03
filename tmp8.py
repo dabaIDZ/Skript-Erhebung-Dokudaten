@@ -1974,7 +1974,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                 self.datenspeicher.df[self.neuer_spaltenname] = np.nan
 
         if genannt:
-            for schlüssel, value_list in codierdict_export.items():
+            for schlüssel, value_list in codierung_dict_export.items():
                 value_list = list(itertools.chain.from_iterable(value_list))
                 for value in value_list:
                     if genannt_markierung_leer == False:
