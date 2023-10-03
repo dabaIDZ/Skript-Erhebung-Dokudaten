@@ -1790,7 +1790,10 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.codierliste = self.spalten_auswahl
             self.werte_uncodiert = [element for element in self.spalten_auswahl if element not in keys_as_list]
             self.werte_codiert = [element for element in self.spalten_auswahl if element in keys_as_list]
-            self.codierliste_dict = {key: [] for key in self.spalten_auswahl }
+            codierliste_dict_appendix = {key: [] for key in self.spalten_auswahl}
+            for key, value in codierliste_dict_appendix.items():
+                if key not in self.codierliste_dict:
+                    self.codierliste_dict[key] = value
             self.codierliste_dict2 = copy.deepcopy(self.codierliste_dict)
             print("codierliste_gesamt_initialisieren 2a")
             print("self.codierliste", self.codierliste)
