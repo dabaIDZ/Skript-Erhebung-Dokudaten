@@ -990,7 +990,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         self.spaltenelemente_vollstaendig_zusammen = []
 
         self.codieren_erstaufruf = True  # Markierung, dass bestimmte Code-Teile beim ersten Durchlauf im Codierwidget nicht aufgerufen werden müssen
-        self.codierliste = {}  # vollständige Liste aller zu codierenden Elemente
+        self.codierliste = []  # vollständige Liste aller zu codierenden Elemente
         self.codierliste_aktuell = {}  # aktuell anzuzeigende Elemente zum Codieren
         self.n_zucodieren_gesamt = 0  # Anzahl der zu codierenden Elemente
         self.codieren_aktuelle_nummer = 0  # aktuell ausgewähltes Codierelement der Liste codierliste_aktuell
@@ -1579,6 +1579,11 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         print("click_button_zumletzten")
 
     def click_checkbox_codiertuncodiert(self):
+        if len(self.werte_uncodiert) == 0:
+            self.checkBox_codieren_codierteanzeigen.setChecked(True)
+        if len(self.werte_codiert) == 0:
+            self.checkBox_codieren_uncodierteanzeigen.setChecked(True)
+
         print("click_checkbox_codiertuncodiert anfang")
         self.element_auf_null_setzen = True
         self.line_codeakt_num_autofill = True
@@ -1678,8 +1683,12 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
 
     def checkboxen_markieren(self):  # Gespeicherte Auswahl der Checkboxen wieder anzeigen
         print("checkboxen_markieren anfang")
-        aktueller_key = self.codierliste_aktuell[self.codieren_aktuelle_nummer]
-        bereits_codiertes_element = aktueller_key in self.codierte_keys
+        bereits_codiertes_element = False
+        try:
+            aktueller_key = self.codierliste_aktuell[self.codieren_aktuelle_nummer]
+            bereits_codiertes_element = aktueller_key in self.codierte_keys
+        except:
+            print('excption')
         position_n = self.codierliste_aktuell[self.codieren_aktuelle_nummer]
         if bereits_codiertes_element:
             checkboxes_toselect_gesamt = self.datenspeicher.codierdict_export[tuple(aktueller_key)]
@@ -1750,14 +1759,17 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         if self.genannt == True:
             self.lbl_codetext.setText("</b>" + str(self.codierliste_aktuell[self.codieren_aktuelle_nummer]) + "</b>")
         if self.genannt == False:
-            if str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][1]) == 'nan':
-                self.lbl_codetext.setText(
-                    str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][
-                            0]) + "  :  \n" + "<b>" + "[leere Zelle]" + "</b>")
-            else:
-                self.lbl_codetext.setText(
-                    str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][0]) + "  :  \n" + "<b>" + str(
-                        self.codierliste_aktuell[self.codieren_aktuelle_nummer][1]) + "</b>")
+            try:
+                if str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][1]) == 'nan':
+                    self.lbl_codetext.setText(
+                        str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][
+                                0]) + "  :  \n" + "<b>" + "[leere Zelle]" + "</b>")
+                else:
+                    self.lbl_codetext.setText(
+                        str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][0]) + "  :  \n" + "<b>" + str(
+                            self.codierliste_aktuell[self.codieren_aktuelle_nummer][1]) + "</b>")
+            except:
+                print('exception')
         self.lbl_codetext.setWordWrap(True)  # Aktivieren Sie den Zeilenumbruch, falls erforderlich
         self.lbl_codetext.setTextFormat(Qt.RichText)  # Setzen Sie die Rich-Text-Formatierung
         self.line_codeakt_num.setText(str(self.codieren_aktuelle_nummer_anzeige))
@@ -1777,13 +1789,15 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.button_rueckwaerts.setEnabled(True)
 
     def codierliste_gesamt_initialisieren(self):
-        self.codierliste = {}
-        keys_as_list = self.codierte_keys
+        self.codierliste.extend(self.codierte_keys)
+        for element in self.codierliste:
+            if self.datenspeicher.codierdict_export.get(tuple(element)) == []:
+                self.codierliste.remove(element)
 
         if self.genannt == True:
             self.codierliste = self.spalten_auswahl
-            self.werte_uncodiert = [element for element in self.spalten_auswahl if element not in keys_as_list]
-            self.werte_codiert = [element for element in self.spalten_auswahl if element in keys_as_list]
+            # self.werte_uncodiert = [element for element in self.spalten_auswahl if element not in keys_as_list]
+            # self.werte_codiert = [element for element in self.spalten_auswahl if element in keys_as_list]
             codierliste_dict_appendix = {key: [] for key in self.spalten_auswahl}
             for key, value in codierliste_dict_appendix.items():
                 if key not in self.codierliste_dict:
@@ -1793,15 +1807,17 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             print("self.codierliste", self.codierliste)
         if self.genannt == False:
             self.codierliste = self.elemente_vollstaendig_getrennt_einfach
-            self.werte_uncodiert = [element for element in self.elemente_vollstaendig_getrennt_einfach if
-                                    element not in keys_as_list]
             self.werte_codiert = [element for element in self.elemente_vollstaendig_getrennt_einfach if
-                                  element in keys_as_list]
+                                  element in self.codierte_keys and
+                                  element not in self.werte_codiert]
+            self.werte_uncodiert = [element for element in self.elemente_vollstaendig_getrennt_einfach if
+                                    element not in self.werte_codiert and
+                                    element not in self.werte_uncodiert]
             self.codierliste_dict = {tuple(key): [] for key in self.elemente_vollstaendig_getrennt_einfach}
             self.codierliste_dict2 = copy.deepcopy(self.codierliste_dict)
             print("codierliste_gesamt_initialisieren 2b")
             print("self.codierliste", self.codierliste)
-        self.werte_uncodiert = copy.deepcopy(self.codierliste)
+        # self.werte_uncodiert = copy.deepcopy(self.codierliste)
         self.n_zucodieren_gesamt = len(self.codierliste)
         print("self.werte_codiert", self.werte_codiert)
         print("self.n_zucodieren_gesamt", self.n_zucodieren_gesamt)
@@ -1831,7 +1847,6 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         position_n = self.codierliste_aktuell[self.codieren_aktuelle_nummer]
         if self.genannt == True:
             self.codierliste_dict[position_n] = [selected_checkboxes_gesamt]
-            self.datenspeicher.codierdict_export[position_n] = [selected_checkboxes_gesamt]
             print("self.codierliste_dict", self.codierliste_dict)
         if self.genannt == False:
             self.codierliste_dict[tuple(position_n)] = [selected_checkboxes_gesamt]
