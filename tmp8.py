@@ -1,3 +1,4 @@
+version = '1.0'
 
 import sys
 import copy
@@ -62,6 +63,7 @@ grafik_erstell = Grafik_Erstellen()
 # Pandas-Optionen setzen
 pd.set_option('display.max_columns', None)
 
+
 # Klasse zum Speichern der Daten
 class Datenspeicher:
     def __init__(self):
@@ -87,9 +89,9 @@ class Datenspeicher:
         self.dict_code_checkboxes_auswahl_lebensbereich = {}
         self.lebensbereich_codiert = False
         self.fortschritt_lebensbereiche = 0
-
-
-        self.dict_lebensbereiche_vorgabe = { # dict mit den Vorgaben für die Codierung, Key: Oberbegriff, Value: Liste mit Unterpunkten
+        self.codierliste_dict_lebensbereich = {}
+        self.dict_lebensbereiche_vorgabe = {
+            # dict mit den Vorgaben für die Codierung, Key: Oberbegriff, Value: Liste mit Unterpunkten
             "Arbeit": ["Durchführung des Beschäftigungsverhältnisses",
                        "Anbahnung/ Zugang zu einem Beschäftigungsverhältnis", "Arbeitsalltag",
                        "Beendigung des Arbeitsverhältnisses", "anderes - Arbeit", "keine Angabe - Arbeit",
@@ -130,15 +132,14 @@ class Datenspeicher:
         self.dict_code_checkboxes_auswahl_diskriminierungsmerkmale = {}
         self.diskriminierungsmerkmale_codiert = False
         self.fortschritt_diskriminierungsmerkmale = 0
+        self.codierliste_dict_diskriminierungsmerkmal = {}
         self.dict_diskriminierungsmerkmale_vorgabe = {
-            "Geschlecht": ["Frausein / Sexismus", "Mannsein", "Trans*sein/ Trans*Hintergrund", "Inter*sein", "Divers",
-                           "Non-Binary", "anderes - Geschlecht", "keine Angabe - Geschlecht",
-                           "ignorieren - Geschlecht"],
-            "Sexuelle Identität": ["lesbisch", "schwul", "bisexuell", "asexuell",
-                                   "anderes - Sexuelle Identität", "keine Angabe - Sexuelle Identität",
-                                   "ignorieren - Sexuelle Identität"],
-            "Lebensalter": ["hohes Alter", "geringes Alter", "anderes - Lebensalter", "keine Angabe - Lebensalter",
-                            "ignorieren - Lebensalter"],
+            # dict mit den Vorgaben für die Codierung, Key: Oberbegriff, Value: Liste mit Unterpunkten
+            "Geschlecht": ["Frausein / Sexismus", "Mannsein", "Trans*sein/ Trans*Hintergrund", "Inter*sein",
+                           "Non-Binary", "anderes-Geschlecht"],
+            "Sexuelle Identität": ["lesbisch", "schwul", "bisexuell", "queer", "asexuell",
+                                   "anderes-Sexuelle Identität"],
+            "Lebensalter": ["hohes Alter", "geringes Alter", "anderes-Lebensalter"],
             "Behinderung/ Chronische Erkrankung": ["Behinderung", "Chronische Erkrankung",
                                                    "anderes - Behinderung/ Chronische Erkrankung",
                                                    "keine Angabe - Behinderung/ Chronische Erkrankung",
@@ -166,20 +167,21 @@ class Datenspeicher:
             "keine Angabe - Diskriminierungsmerkmal": [],
             "ignorieren - Diskriminierungsmerkmal": []
         }
-
         self.spalten_interventionsformen = []
         self.trennzeichen_liste_interventionsformen = []
         self.genannt_interventionsformen = False
         self.dict_code_checkboxes_auswahl_interventionsformen = {}
         self.interventionsformen_codiert = False
         self.fortschritt_interventionsform = 0
-        self.dict_interventionsformen_vorgabe = { # dict mit den Vorgaben für die Codierung, Key: Oberbegriff; keine Unterpunkte
-        "Nicht-rechtliche Interventionen(über Beratung hinaus)": [],
-        "Rechtliche, aber außergerichtliche Interventionen": [],
-        "gerichtliche Interventionen": [],
-        "anderes - Interventionsformen": [],
-        "keine Angabe - Interventionsformen": [],
-        "ignorieren - Interventionsformen": []
+        self.codierliste_dict_interventionsform = {}
+        self.dict_interventionsformen_vorgabe = {
+            # dict mit den Vorgaben für die Codierung, Key: Oberbegriff; keine Unterpunkte
+            "Nicht-rechtliche Interventionen(über Beratung hinaus)": [],
+            "Rechtliche, aber außergerichtliche Interventionen": [],
+            "gerichtliche Interventionen": [],
+            "anderes - Interventionsformen": [],
+            "keine Angabe - Interventionsformen": [],
+            "ignorieren - Interventionsformen": []
         }
         self.spalten_diskriminierungsform = []
         self.trennzeichen_liste_diskriminierungsform = []
@@ -187,7 +189,9 @@ class Datenspeicher:
         self.dict_code_checkboxes_auswahl_diskriminierungsform = {}
         self.diskriminierungsform_codiert = False
         self.fortschritt_diskriminierungsform = 0
-        self.dict_diskriminierungsform_vorgabe = { # dict mit den Vorgaben für die Codierung, Key: Oberbegriff; keine Unterpunkte
+        self.codierliste_dict_diskriminierungsform = {}
+        self.dict_diskriminierungsform_vorgabe = {
+            # dict mit den Vorgaben für die Codierung, Key: Oberbegriff; keine Unterpunkte
             "Verwehr von Zugang / Ausschluss von bestehender Teilhabe": [],
             "Verwehr von gleichwertiger Behandlung, Bewertung und Leistung": [],
             "Belästigung": [],
@@ -206,15 +210,15 @@ class Datenspeicher:
         self.dict_code_checkboxes_auswahl_agg_relevanz = {}
         self.agg_relevanz_codiert = False
         self.fortschritt_agg_relevanz = 0
-        self.dict_agg_relevanz_vorgabe = { # dict mit den Vorgaben für die Codierung, Key: Oberbegriff; keine Unterpunkte
+        self.codierliste_dict_agg_relevanz = {}
+        self.dict_agg_relevanz_vorgabe = {
+            # dict mit den Vorgaben für die Codierung, Key: Oberbegriff; keine Unterpunkte
             "AGG-relevant": [],
             "nicht AGG-relevant": [],
             "anderes - AGG-Relevanz": [],
             "keine Angabe - AGG-Relevanz": [],
             "ignorieren - AGG-Relevanz": []
         }
-
-
 
         self.spalten_gesamt = self.df.columns.tolist()
 
@@ -238,42 +242,41 @@ class Datenspeicher:
         self.codierung_dict_export_diskriminierungsform = {}
         self.codierung_dict_export_agg_relevanz = {}
         self.dict_code_checkboxes_auswahl_gesamt = {}
-        
+
         self.genannt_markierung_leer_lebensbereich = True
         self.genannt_markierung_leer_diskriminierungsmerkmale = True
         self.genannt_markierung_leer_interventionsformen = True
         self.genannt_markierung_leer_diskriminierungsform = True
         self.genannt_markierung_leer_agg_relevanz = True
-        
+
         self.genannt_markierung_zeichen_lebensbereich = False
         self.genannt_markierung_zeichen_diskriminierungsmerkmale = False
         self.genannt_markierung_zeichen_interventionsformen = False
         self.genannt_markierung_zeichen_diskriminierungsform = False
         self.genannt_markierung_zeichen_agg_relevanz = False
-        
+
         self.genannt_markierung_zeichen_text_lebensbereich = ""
         self.genannt_markierung_zeichen_text_diskriminierungsmerkmale = ""
         self.genannt_markierung_zeichen_text_interventionsformen = ""
         self.genannt_markierung_zeichen_text_diskriminierungsform = ""
         self.genannt_markierung_zeichen_text_agg_relevanz = ""
-        
+
         self.genannt_markierung_nichtzeichen_lebensbereich = False
         self.genannt_markierung_nichtzeichen_diskriminierungsmerkmale = False
         self.genannt_markierung_nichtzeichen_interventionsformen = False
         self.genannt_markierung_nichtzeichen_diskriminierungsform = False
         self.genannt_markierung_nichtzeichen_agg_relevanz = False
-        
+
         self.genannt_markierung_nichtzeichen_text_lebensbereich = ""
         self.genannt_markierung_nichtzeichen_text_diskriminierungsmerkmale = ""
         self.genannt_markierung_nichtzeichen_text_interventionsformen = ""
         self.genannt_markierung_nichtzeichen_text_diskriminierungsform = ""
         self.genannt_markierung_nichtzeichen_text_agg_relevanz = ""
-        
-        
 
     def codierfenster_initialisieren(self):
         self.elemente_vollstaendig_getrennt_einfach = []
         self.liste_anzeige = {}
+
 
 # Klasse für die GUI des Hauptfensters
 class FRM_main(QMainWindow, Ui_MainWindow):
@@ -290,6 +293,7 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         self.gui_datenausgabe = None
         self.funktionalitaet()
         self.fortschritt_aktualisieren()
+        self.version.setText(f"Version: {version}")
 
     # On-Klick-Events der Buttons definieren
     def funktionalitaet(self):
@@ -424,43 +428,41 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         temp_speicher_save.zeitraum_ausgewaehlt = self.datenspeicher.zeitraum_ausgewaehlt
         temp_speicher_save.spalte_zeitraum = self.datenspeicher.spalte_zeitraum
         temp_speicher_save.codierdict_export = self.datenspeicher.codierdict_export
-        
+
         # copy all values genannt_markierung_leer_lebensbereich, genannt_markierung_leer_diskriminierungsmerkmale, genannt_markierung_leer_interventionsformen, genannt_markierung_leer_diskriminierungsform, genannt_markierung_leer_agg_relevanz
         temp_speicher_save.genannt_markierung_leer_lebensbereich = self.datenspeicher.genannt_markierung_leer_lebensbereich
         temp_speicher_save.genannt_markierung_leer_diskriminierungsmerkmale = self.datenspeicher.genannt_markierung_leer_diskriminierungsmerkmale
         temp_speicher_save.genannt_markierung_leer_interventionsformen = self.datenspeicher.genannt_markierung_leer_interventionsformen
         temp_speicher_save.genannt_markierung_leer_diskriminierungsform = self.datenspeicher.genannt_markierung_leer_diskriminierungsform
         temp_speicher_save.genannt_markierung_leer_agg_relevanz = self.datenspeicher.genannt_markierung_leer_agg_relevanz
-        
+
         # copy all values genannt_markierung_zeichen_lebensbereich, genannt_markierung_zeichen_diskriminierungsmerkmale, genannt_markierung_zeichen_interventionsformen, genannt_markierung_zeichen_diskriminierungsform, genannt_markierung_zeichen_agg_relevanz
         temp_speicher_save.genannt_markierung_zeichen_lebensbereich = self.datenspeicher.genannt_markierung_zeichen_lebensbereich
         temp_speicher_save.genannt_markierung_zeichen_diskriminierungsmerkmale = self.datenspeicher.genannt_markierung_zeichen_diskriminierungsmerkmale
         temp_speicher_save.genannt_markierung_zeichen_interventionsformen = self.datenspeicher.genannt_markierung_zeichen_interventionsformen
         temp_speicher_save.genannt_markierung_zeichen_diskriminierungsform = self.datenspeicher.genannt_markierung_zeichen_diskriminierungsform
         temp_speicher_save.genannt_markierung_zeichen_agg_relevanz = self.datenspeicher.genannt_markierung_zeichen_agg_relevanz
-        
+
         # copy all values genannt_markierung_zeichen_text_lebensbereich, genannt_markierung_zeichen_text_diskriminierungsmerkmale, genannt_markierung_zeichen_text_interventionsformen, genannt_markierung_zeichen_text_diskriminierungsform, genannt_markierung_zeichen_text_agg_relevanz
         temp_speicher_save.genannt_markierung_zeichen_text_lebensbereich = self.datenspeicher.genannt_markierung_zeichen_text_lebensbereich
         temp_speicher_save.genannt_markierung_zeichen_text_diskriminierungsmerkmale = self.datenspeicher.genannt_markierung_zeichen_text_diskriminierungsmerkmale
         temp_speicher_save.genannt_markierung_zeichen_text_interventionsformen = self.datenspeicher.genannt_markierung_zeichen_text_interventionsformen
         temp_speicher_save.genannt_markierung_zeichen_text_diskriminierungsform = self.datenspeicher.genannt_markierung_zeichen_text_diskriminierungsform
         temp_speicher_save.genannt_markierung_zeichen_text_agg_relevanz = self.datenspeicher.genannt_markierung_zeichen_text_agg_relevanz
-        
+
         # copy all values genannt_markierung_nichtzeichen_lebensbereich, genannt_markierung_nichtzeichen_diskriminierungsmerkmale, genannt_markierung_nichtzeichen_interventionsformen, genannt_markierung_nichtzeichen_diskriminierungsform, genannt_markierung_nichtzeichen_agg_relevanz
         temp_speicher_save.genannt_markierung_nichtzeichen_lebensbereich = self.datenspeicher.genannt_markierung_nichtzeichen_lebensbereich
         temp_speicher_save.genannt_markierung_nichtzeichen_diskriminierungsmerkmale = self.datenspeicher.genannt_markierung_nichtzeichen_diskriminierungsmerkmale
         temp_speicher_save.genannt_markierung_nichtzeichen_interventionsformen = self.datenspeicher.genannt_markierung_nichtzeichen_interventionsformen
         temp_speicher_save.genannt_markierung_nichtzeichen_diskriminierungsform = self.datenspeicher.genannt_markierung_nichtzeichen_diskriminierungsform
         temp_speicher_save.genannt_markierung_nichtzeichen_agg_relevanz = self.datenspeicher.genannt_markierung_nichtzeichen_agg_relevanz
-        
+
         # copy all values genannt_markierung_nichtzeichen_text_lebensbereich, genannt_markierung_nichtzeichen_text_diskriminierungsmerkmale, genannt_markierung_nichtzeichen_text_interventionsformen, genannt_markierung_nichtzeichen_text_diskriminierungsform, genannt_markierung_nichtzeichen_text_agg_relevanz
         temp_speicher_save.genannt_markierung_nichtzeichen_text_lebensbereich = self.datenspeicher.genannt_markierung_nichtzeichen_text_lebensbereich
         temp_speicher_save.genannt_markierung_nichtzeichen_text_diskriminierungsmerkmale = self.datenspeicher.genannt_markierung_nichtzeichen_text_diskriminierungsmerkmale
         temp_speicher_save.genannt_markierung_nichtzeichen_text_interventionsformen = self.datenspeicher.genannt_markierung_nichtzeichen_text_interventionsformen
         temp_speicher_save.genannt_markierung_nichtzeichen_text_diskriminierungsform = self.datenspeicher.genannt_markierung_nichtzeichen_text_diskriminierungsform
         temp_speicher_save.genannt_markierung_nichtzeichen_text_agg_relevanz = self.datenspeicher.genannt_markierung_nichtzeichen_text_agg_relevanz
-        
-        
 
         # generates a string to get a readable representation of temp_speicher_save
         textual_representation = str(temp_speicher_save.__dict__)
@@ -479,7 +481,8 @@ class FRM_main(QMainWindow, Ui_MainWindow):
             # open dialog to inform the user that the template was saved
             msg = QMessageBox()
             msg.setWindowTitle("Speichern erfolgreich")
-            msg.setText("Das Template wurde erfolgreich unter\n" + dateipfad_zum_speichern + "\ngespeichert.\nEine lesbare Textdatei wurde ebenfalls gespeichert.")
+            msg.setText(
+                "Das Template wurde erfolgreich unter\n" + dateipfad_zum_speichern + "\ngespeichert.\nEine lesbare Textdatei wurde ebenfalls gespeichert.")
             msg.setIcon(QMessageBox.Information)
             x = msg.exec_()
 
@@ -579,8 +582,6 @@ class FRM_main(QMainWindow, Ui_MainWindow):
 
         self.fortschritt_aktualisieren()
 
-
-
     # Wenn das Fenster noch nicht existiert, wird es erstellt und geöffnet; ansonsten nur geöffnet
     def oeffnen_gui_datengrundlage_einfach(self):
         if self.gui_datengrundlage_einfach is None:
@@ -617,8 +618,6 @@ class FRM_main(QMainWindow, Ui_MainWindow):
             self.setEnabled(False)
         else:
             self.gui_codierfenster.activateWindow()
-
-
 
     def enable_frm_main(self):
         self.setEnabled(True)
@@ -683,6 +682,7 @@ class FRM_datengrundlage_einfach(QMainWindow, Ui_fenster_datengrundlage_einfach)
     def abbrechen(self):
         self.tmp_pfad_datengrundlage_einfach = ""
         self.close()
+
 
 # Muss mmn anders gelöst werden, mittels Datumskonvertierung
 class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
@@ -878,7 +878,8 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
             self.datenspeicher.zeitraum_inhalt_txt = self.text_zeitraum_inhalt.text().strip()
             self.datenspeicher.zeitraum_genau_txt = ""
             print("self.datenspeicher.spalte_zeitraum", self.datenspeicher.spalte_zeitraum)
-            print("self.datenspeicher.dfspalte_zeitraum", self.datenspeicher.df_original[self.datenspeicher.spalte_zeitraum])
+            print("self.datenspeicher.dfspalte_zeitraum",
+                  self.datenspeicher.df_original[self.datenspeicher.spalte_zeitraum])
             print("self.datenspeicher.zeitraum_inhalt_txt", self.datenspeicher.zeitraum_inhalt_txt)
             print("Datentyp der Spalte:", type(self.datenspeicher.df_original[self.datenspeicher.spalte_zeitraum]))
             self.datenspeicher.df = self.datenspeicher.df_original[
@@ -896,7 +897,7 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
             self.datenspeicher.zeitraum_inhalt_txt = ""
             self.datenspeicher.zeitraum_genau_txt = self.text_zeitraum_genau.text().strip()
             self.datenspeicher.df = self.datenspeicher.df_original[self.datenspeicher.df_original[
-                                                              self.datenspeicher.spalte_zeitraum] == self.datenspeicher.zeitraum_genau_txt].dropna()
+                                                                       self.datenspeicher.spalte_zeitraum] == self.datenspeicher.zeitraum_genau_txt].dropna()
 
         if self.radio_zeitraum_irgendwas.isChecked():
             self.datenspeicher.zeitraum_beginn = False
@@ -926,6 +927,7 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
         self.datenspeicher.zeitraum_inhalt_txt = ""
         self.datenspeicher.zeitraum_genau_txt = ""
         self.close()
+
 
 # Klasse für die GUI des Codierfensters; Funktionen siehe FRM_datengrundlage_einfach
 class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
@@ -989,7 +991,6 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
 
         self.codieren_erstaufruf = True  # Markierung, dass bestimmte Code-Teile beim ersten Durchlauf im Codierwidget nicht aufgerufen werden müssen
         self.codierliste = {}  # vollständige Liste aller zu codierenden Elemente
-        self.codierliste_dict = {}  # vollständiges Dictionaire aller zu codierenden Elemente mitsamt ihrer Codierung
         self.codierliste_aktuell = {}  # aktuell anzuzeigende Elemente zum Codieren
         self.n_zucodieren_gesamt = 0  # Anzahl der zu codierenden Elemente
         self.codieren_aktuelle_nummer = 0  # aktuell ausgewähltes Codierelement der Liste codierliste_aktuell
@@ -1053,6 +1054,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.trennzeichen_liste = self.datenspeicher.trennzeichen_liste_lebensbereich
             self.dict_code_checkboxes_auswahl = self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich
             self.label_codierung_ueberschrift.setText("<b>Kategorien zuordnen: Lebensbereich</b>")
+            self.codierliste_dict = self.datenspeicher.codierliste_dict_lebensbereich
             self.label_codierung_ueberschrift.setTextFormat(Qt.RichText)
         if self.datenspeicher.aktuell_codiert == "Diskriminierungsmerkmale":
             self.tmp_spalten_auswahl = self.datenspeicher.spalten_diskriminierungsmerkmale
@@ -1061,6 +1063,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.trennzeichen_liste = self.datenspeicher.trennzeichen_liste_diskriminierungsmerkmale
             self.dict_code_checkboxes_auswahl = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale
             self.label_codierung_ueberschrift.setText("<b>Kategorien zuordnen: Diskriminierungsmerkmale</b>")
+            self.codierliste_dict = self.datenspeicher.codierliste_dict_diskriminierungsmerkmal
             self.label_codierung_ueberschrift.setTextFormat(Qt.RichText)
         if self.datenspeicher.aktuell_codiert == "Interventionsformen":
             self.tmp_spalten_auswahl = self.datenspeicher.spalten_interventionsformen
@@ -1069,6 +1072,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.trennzeichen_liste = self.datenspeicher.trennzeichen_liste_interventionsformen
             self.dict_code_checkboxes_auswahl = self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen
             self.label_codierung_ueberschrift.setText("<b>Kategorien zuordnen: Interventionsformen</b>")
+            self.codierliste_dict = self.datenspeicher.codierliste_dict_interventionsform
             self.label_codierung_ueberschrift.setTextFormat(Qt.RichText)
         if self.datenspeicher.aktuell_codiert == "Diskriminierungsform":
             self.tmp_spalten_auswahl = self.datenspeicher.spalten_diskriminierungsform
@@ -1077,6 +1081,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.trennzeichen_liste = self.datenspeicher.trennzeichen_liste_diskriminierungsform
             self.dict_code_checkboxes_auswahl = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform
             self.label_codierung_ueberschrift.setText("<b>Kategorien zuordnen: Diskriminierungsform(en)</b>")
+            self.codierliste_dict = self.datenspeicher.codierliste_dict_diskriminierungsform
             self.label_codierung_ueberschrift.setTextFormat(Qt.RichText)
         if self.datenspeicher.aktuell_codiert == "AGG_Relevanz":
             self.tmp_spalten_auswahl = self.datenspeicher.spalten_agg_relevanz
@@ -1085,6 +1090,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.trennzeichen_liste = self.datenspeicher.trennzeichen_liste_agg_relevanz
             self.dict_code_checkboxes_auswahl = self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz
             self.label_codierung_ueberschrift.setText("<b>Kategorien zuordnen: AGG-Relevanz</b>")
+            self.codierliste_dict = self.datenspeicher.codierliste_dict_agg_relevanz
             self.label_codierung_ueberschrift.setTextFormat(Qt.RichText)
         self.spalten_auswahl = self.tmp_spalten_auswahl
 
@@ -1109,7 +1115,6 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.lineEdit_trennzeichen1.setText(self.trennzeichen_liste[0])
             self.lineEdit_trennzeichen2.setText(self.trennzeichen_liste[1])
             self.lineEdit_trennzeichen3.setText(self.trennzeichen_liste[2])
-
 
     ### Hat keine Funktion? ###
     def adjust_horizontal_layout(self):
@@ -1240,7 +1245,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.genannt_markierung_nichtzeichen = True
             self.genannt_markierung_nichtzeichen_text = self.line_genannt_nichtzeichen
         # self.init_widget_codieren()
-        
+
         if self.datenspeicher.aktuell_codiert == "Lebensbereich":
             self.datenspeicher.genannt_markierung_leer_lebensbereich = self.genannt_markierung_leer
             self.datenspeicher.genannt_markierung_zeichen_lebensbereich = self.genannt_markierung_zeichen
@@ -1271,8 +1276,6 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.datenspeicher.genannt_markierung_zeichen_text_agg_relevanz = self.genannt_markierung_zeichen_text
             self.datenspeicher.genannt_markierung_nichtzeichen_agg_relevanz = self.genannt_markierung_nichtzeichen
             self.datenspeicher.genannt_markierung_nichtzeichen_text_agg_relevanz = self.genannt_markierung_nichtzeichen_text
-
-
 
         self.fortschritt_details.setValue(100)
         self.tab_codes_auswahl.setEnabled(True)
@@ -1648,8 +1651,8 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
                 print("value", value)
                 checkbox = QCheckBox(value)
                 ### auskommentiert
-                #checkbox.stateChanged.connect(
-                 #   self.speichern_ausgewaehlter_checkboxen)  # Verbindung für Value-Checkboxen Das könnte ein Problem sein
+                # checkbox.stateChanged.connect(
+                #   self.speichern_ausgewaehlter_checkboxen)  # Verbindung für Value-Checkboxen Das könnte ein Problem sein
                 self.value_checkboxes.append(checkbox)
                 checkbox.setStyleSheet("QCheckBox { font-size: 12px; margin-left: 20px; }")
                 print("länge", len(self.value_checkboxes))
@@ -1670,16 +1673,16 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
                                          checkbox not in selected_widget.children()]
         # Check which checkboxes are selected
         ### auskommentiert
-        #self.speichern_ausgewaehlter_checkboxen()
+        # self.speichern_ausgewaehlter_checkboxen()
         print("show_values_for_key ende")
 
     def checkboxen_markieren(self):  # Gespeicherte Auswahl der Checkboxen wieder anzeigen
         print("checkboxen_markieren anfang")
-        for checkbox in self.key_checkboxes + self.value_checkboxes:
-            checkbox.setChecked(False)
+        aktueller_key = self.codierliste_aktuell[self.codieren_aktuelle_nummer]
+        bereits_codiertes_element = aktueller_key in self.codierte_keys
         position_n = self.codierliste_aktuell[self.codieren_aktuelle_nummer]
-        if tuple(position_n) in self.codierliste_dict:
-            checkboxes_toselect_gesamt = self.codierliste_dict[tuple(position_n)]
+        if bereits_codiertes_element:
+            checkboxes_toselect_gesamt = self.datenspeicher.codierdict_export[tuple(aktueller_key)]
             if len(checkboxes_toselect_gesamt) >= 1:
                 # Mark checkboxes based on selected values
                 for checkbox in self.key_checkboxes:
@@ -1749,7 +1752,8 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         if self.genannt == False:
             if str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][1]) == 'nan':
                 self.lbl_codetext.setText(
-                    str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][0]) + "  :  \n" + "<b>" + "[leere Zelle]" + "</b>")
+                    str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][
+                            0]) + "  :  \n" + "<b>" + "[leere Zelle]" + "</b>")
             else:
                 self.lbl_codetext.setText(
                     str(self.codierliste_aktuell[self.codieren_aktuelle_nummer][0]) + "  :  \n" + "<b>" + str(
@@ -1789,16 +1793,20 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             print("self.codierliste", self.codierliste)
         if self.genannt == False:
             self.codierliste = self.elemente_vollstaendig_getrennt_einfach
-            self.werte_uncodiert = [element for element in self.elemente_vollstaendig_getrennt_einfach if element not in keys_as_list]
-            self.werte_codiert = [element for element in self.elemente_vollstaendig_getrennt_einfach if element in keys_as_list]
+            self.werte_uncodiert = [element for element in self.elemente_vollstaendig_getrennt_einfach if
+                                    element not in keys_as_list]
+            self.werte_codiert = [element for element in self.elemente_vollstaendig_getrennt_einfach if
+                                  element in keys_as_list]
             self.codierliste_dict = {tuple(key): [] for key in self.elemente_vollstaendig_getrennt_einfach}
             self.codierliste_dict2 = copy.deepcopy(self.codierliste_dict)
             print("codierliste_gesamt_initialisieren 2b")
             print("self.codierliste", self.codierliste)
         self.werte_uncodiert = copy.deepcopy(self.codierliste)
         self.n_zucodieren_gesamt = len(self.codierliste)
+        print("self.werte_codiert", self.werte_codiert)
+        print("self.n_zucodieren_gesamt", self.n_zucodieren_gesamt)
         self.lbl_fort_daten_cod.setText(
-            "Daten codieren (" + str(len(self.werte_codiert)) + "/" + str(self.codierliste) + ")")
+            "Daten codieren (" + str(len(self.werte_codiert)) + "/" + str(self.n_zucodieren_gesamt) + ")")
 
     def codierliste_aktuell_erstellen(self):
         if self.checkBox_codieren_codierteanzeigen.isChecked() & self.checkBox_codieren_uncodierteanzeigen.isChecked():
@@ -1823,10 +1831,11 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         position_n = self.codierliste_aktuell[self.codieren_aktuelle_nummer]
         if self.genannt == True:
             self.codierliste_dict[position_n] = [selected_checkboxes_gesamt]
+            self.datenspeicher.codierdict_export[position_n] = [selected_checkboxes_gesamt]
             print("self.codierliste_dict", self.codierliste_dict)
         if self.genannt == False:
             self.codierliste_dict[tuple(position_n)] = [selected_checkboxes_gesamt]
-        self.datenspeicher.codierdict_export.update(self.codierliste_dict)
+            self.datenspeicher.codierdict_export[tuple(position_n)] = [selected_checkboxes_gesamt]
         print("speichern_ausgewählter_checkboxen ende")
 
     def speichern_in_listen(self):
@@ -1843,6 +1852,8 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
                 self.werte_codiert.remove(element)
             if not element in self.werte_uncodiert:
                 self.werte_uncodiert.append(element)
+        print("self.werte_codiert", self.werte_codiert)
+        print("self.n_zucodieren_gesamt", self.n_zucodieren_gesamt)
         self.lbl_fort_daten_cod.setText(
             "Daten codieren (" + str(len(self.werte_codiert)) + "/" + str(self.n_zucodieren_gesamt) + ")")
 
@@ -1862,6 +1873,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich = self.dict_code_checkboxes_auswahl
             self.datenspeicher.codierung_dict_export_lebensbereich = self.codierliste_dict
             self.datenspeicher.lebensbereich_codiert = True
+            self.datenspeicher.codierliste_dict_lebensbereich = self.codierliste_dict
         if self.datenspeicher.aktuell_codiert == "Diskriminierungsmerkmale":
             self.datenspeicher.spalten_diskriminierungsmerkmale = self.tmp_spalten_auswahl
             self.datenspeicher.genannt_diskriminierungsmerkmale = self.genannt
@@ -1871,6 +1883,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale = self.dict_code_checkboxes_auswahl
             self.datenspeicher.codierung_dict_export_diskriminierungsmerkmale = self.codierliste_dict
             self.datenspeicher.diskriminierungsmerkmale_codiert = True
+            self.datenspeicher.codierliste_dict_diskriminierungsmerkmal = self.codierliste_dict
         if self.datenspeicher.aktuell_codiert == "Interventionsformen":
             self.datenspeicher.spalten_interventionsformen = self.tmp_spalten_auswahl
             self.datenspeicher.genannt_interventionsformen = self.genannt
@@ -1880,6 +1893,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen = self.dict_code_checkboxes_auswahl
             self.datenspeicher.codierung_dict_export_interventionsformen = self.codierliste_dict
             self.datenspeicher.interventionsformen_codiert = True
+            self.datenspeicher.codierliste_dict_interventionsform = self.codierliste_dict
         if self.datenspeicher.aktuell_codiert == "Diskriminierungsform":
             self.datenspeicher.spalten_diskriminierungsform = self.tmp_spalten_auswahl
             self.datenspeicher.genannt_diskriminierungsform = self.genannt
@@ -1889,6 +1903,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform = self.dict_code_checkboxes_auswahl
             self.datenspeicher.codierung_dict_export_diskriminierungsform = self.codierliste_dict
             self.datenspeicher.diskriminierungsform_codiert = True
+            self.datenspeicher.codierliste_dict_diskriminierungsform = self.codierliste_dict
         if self.datenspeicher.aktuell_codiert == "AGG_Relevanz":
             self.datenspeicher.spalten_agg_relevanz = self.tmp_spalten_auswahl
             self.datenspeicher.genannt_agg_relevanz = self.genannt
@@ -1898,9 +1913,11 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
             self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz = self.dict_code_checkboxes_auswahl
             self.datenspeicher.codierung_dict_export_agg_relevanz = self.codierliste_dict
             self.datenspeicher.agg_relevanz_codiert = True
+            self.datenspeicher.codierliste_dict_agg_relevanz = self.codierliste_dict
         self.frm_main.fortschritt_aktualisieren()
         print(self.datenspeicher.df)
         self.close()
+
 
 class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
     def __init__(self, datenspeicher, frm_main):  # frm_main als Argument hinzugefügt
@@ -1929,28 +1946,70 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
 
     def button_speichern_klicked(self):
         if (self.datenspeicher.lebensbereich_codiert):
-            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich, self.datenspeicher.codierung_dict_export_lebensbereich, self.datenspeicher.genannt_lebensbereich, self.datenspeicher.trennzeichen_liste_lebensbereich, self.datenspeicher.genannt_markierung_leer_lebensbereich, self.datenspeicher.genannt_markierung_zeichen_lebensbereich, self.datenspeicher.genannt_markierung_zeichen_text_lebensbereich, self.datenspeicher.genannt_markierung_nichtzeichen_lebensbereich, self.datenspeicher.genannt_markierung_nichtzeichen_text_lebensbereich)
+            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich,
+                           self.datenspeicher.codierung_dict_export_lebensbereich,
+                           self.datenspeicher.genannt_lebensbereich,
+                           self.datenspeicher.trennzeichen_liste_lebensbereich,
+                           self.datenspeicher.genannt_markierung_leer_lebensbereich,
+                           self.datenspeicher.genannt_markierung_zeichen_lebensbereich,
+                           self.datenspeicher.genannt_markierung_zeichen_text_lebensbereich,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_lebensbereich,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_text_lebensbereich)
         if (self.datenspeicher.diskriminierungsmerkmale_codiert):
-            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale, self.datenspeicher.codierung_dict_export_diskriminierungsmerkmale, self.datenspeicher.genannt_diskriminierungsmerkmale, self.datenspeicher.trennzeichen_liste_diskriminierungsmerkmale, self.datenspeicher.genannt_markierung_leer_diskriminierungsmerkmale, self.datenspeicher.genannt_markierung_zeichen_diskriminierungsmerkmale, self.datenspeicher.genannt_markierung_zeichen_text_diskriminierungsmerkmale, self.datenspeicher.genannt_markierung_nichtzeichen_diskriminierungsmerkmale, self.datenspeicher.genannt_markierung_nichtzeichen_text_diskriminierungsmerkmale)
+            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale,
+                           self.datenspeicher.codierung_dict_export_diskriminierungsmerkmale,
+                           self.datenspeicher.genannt_diskriminierungsmerkmale,
+                           self.datenspeicher.trennzeichen_liste_diskriminierungsmerkmale,
+                           self.datenspeicher.genannt_markierung_leer_diskriminierungsmerkmale,
+                           self.datenspeicher.genannt_markierung_zeichen_diskriminierungsmerkmale,
+                           self.datenspeicher.genannt_markierung_zeichen_text_diskriminierungsmerkmale,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_diskriminierungsmerkmale,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_text_diskriminierungsmerkmale)
         if (self.datenspeicher.interventionsformen_codiert):
-            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen, self.datenspeicher.codierung_dict_export_interventionsformen, self.datenspeicher.genannt_interventionsformen, self.datenspeicher.trennzeichen_liste_interventionsformen, self.datenspeicher.genannt_markierung_leer_interventionsformen, self.datenspeicher.genannt_markierung_zeichen_interventionsformen, self.datenspeicher.genannt_markierung_zeichen_text_interventionsformen, self.datenspeicher.genannt_markierung_nichtzeichen_interventionsformen, self.datenspeicher.genannt_markierung_nichtzeichen_text_interventionsformen)
+            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen,
+                           self.datenspeicher.codierung_dict_export_interventionsformen,
+                           self.datenspeicher.genannt_interventionsformen,
+                           self.datenspeicher.trennzeichen_liste_interventionsformen,
+                           self.datenspeicher.genannt_markierung_leer_interventionsformen,
+                           self.datenspeicher.genannt_markierung_zeichen_interventionsformen,
+                           self.datenspeicher.genannt_markierung_zeichen_text_interventionsformen,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_interventionsformen,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_text_interventionsformen)
         if (self.datenspeicher.diskriminierungsform_codiert):
-            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform, self.datenspeicher.codierung_dict_export_diskriminierungsform, self.datenspeicher.genannt_diskriminierungsform, self.datenspeicher.trennzeichen_liste_diskriminierungsform, self.datenspeicher.genannt_markierung_leer_diskriminierungsform, self.datenspeicher.genannt_markierung_zeichen_diskriminierungsform, self.datenspeicher.genannt_markierung_zeichen_text_diskriminierungsform, self.datenspeicher.genannt_markierung_nichtzeichen_diskriminierungsform, self.datenspeicher.genannt_markierung_nichtzeichen_text_diskriminierungsform)
+            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform,
+                           self.datenspeicher.codierung_dict_export_diskriminierungsform,
+                           self.datenspeicher.genannt_diskriminierungsform,
+                           self.datenspeicher.trennzeichen_liste_diskriminierungsform,
+                           self.datenspeicher.genannt_markierung_leer_diskriminierungsform,
+                           self.datenspeicher.genannt_markierung_zeichen_diskriminierungsform,
+                           self.datenspeicher.genannt_markierung_zeichen_text_diskriminierungsform,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_diskriminierungsform,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_text_diskriminierungsform)
         if (self.datenspeicher.agg_relevanz_codiert):
-            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz, self.datenspeicher.codierung_dict_export_agg_relevanz, self.datenspeicher.genannt_agg_relevanz, self.datenspeicher.trennzeichen_liste_agg_relevanz, self.datenspeicher.genannt_markierung_leer_agg_relevanz, self.datenspeicher.genannt_markierung_zeichen_agg_relevanz, self.datenspeicher.genannt_markierung_zeichen_text_agg_relevanz, self.datenspeicher.genannt_markierung_nichtzeichen_agg_relevanz, self.datenspeicher.genannt_markierung_nichtzeichen_text_agg_relevanz)
+            self.auswerten(self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz,
+                           self.datenspeicher.codierung_dict_export_agg_relevanz,
+                           self.datenspeicher.genannt_agg_relevanz, self.datenspeicher.trennzeichen_liste_agg_relevanz,
+                           self.datenspeicher.genannt_markierung_leer_agg_relevanz,
+                           self.datenspeicher.genannt_markierung_zeichen_agg_relevanz,
+                           self.datenspeicher.genannt_markierung_zeichen_text_agg_relevanz,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_agg_relevanz,
+                           self.datenspeicher.genannt_markierung_nichtzeichen_text_agg_relevanz)
 
         self.speichern()
         msgbox = QMessageBox()
         msgbox.setWindowTitle("Danke")
-        msgbox.setText("Die Auswertung ist nun abgeschlossen.\nBitte speichern Sie nun die Vorlage.\nDanach können Sie das Programm beenden.\n\nIhre nächsten Schritte sind:\n"
-                       "(1) Senden Sie uns die zip.Datei \"An IDZ senden\" per Email zu.\n(2) Beantworten Sie bitte die Fragen in der Online-Befragen.\n\n"
-                       "Vielen Dank für Ihre Zeit und Mitarbeit.\n"
-                       "Das Studien-Team des IDZ.")
+        msgbox.setText(
+            "Die Auswertung ist nun abgeschlossen.\nBitte speichern Sie nun die Vorlage.\nDanach können Sie das Programm beenden.\n\nIhre nächsten Schritte sind:\n"
+            "(1) Senden Sie uns die zip.Datei \"An IDZ senden\" per Email zu.\n(2) Beantworten Sie bitte die Fragen in der Online-Befragen.\n\n"
+            "Vielen Dank für Ihre Zeit und Mitarbeit.\n"
+            "Das Studien-Team des IDZ.")
         msgbox.setStandardButtons(QMessageBox.Ok)
 
         msgbox.exec_()
 
-    def auswerten(self, dict_code_checkboxes_auswahl, codierung_dict_export, genannt, trennzeichen_liste, genannt_markierung_leer, genannt_markierung_zeichen, genannt_markierung_zeichen_text, genannt_markierung_nichtzeichen, genannt_markierung_nichtzeichen_text):
+    def auswerten(self, dict_code_checkboxes_auswahl, codierung_dict_export, genannt, trennzeichen_liste,
+                  genannt_markierung_leer, genannt_markierung_zeichen, genannt_markierung_zeichen_text,
+                  genannt_markierung_nichtzeichen, genannt_markierung_nichtzeichen_text):
         # fasse alle vorgabe dict zu einem zusammen
         self.datenspeicher.dict_code_checkboxes_auswahl_gesamt = {
             **self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz,
@@ -1993,7 +2052,6 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                 self.gesamtliste_aller_codes.append(schlüssel[0])
 
             self.gesamtliste_aller_codes = list(set(self.gesamtliste_aller_codes))
-
 
             # Umwandlung der Originalspalteninhalte in eine Liste
             for spalte in self.gesamtliste_aller_codes:
@@ -2055,7 +2113,6 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                     for value2 in werte_liste:
                         self.datenspeicher.df.loc[(self.datenspeicher.df["XXX_XXX_" + schlüssel] == 1) & (
                             self.datenspeicher.df["XXX_XXX_" + value].isnull()), "XXX_XXX_" + value2] = 97
-
 
     def werte_füllen(self, datenspeicher):
         if self.datenspeicher.pfad_datenausgabe != "":
@@ -2246,7 +2303,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                 self.fortschrittbalken_grafiken()
 
         if self.datenspeicher.diskriminierungsmerkmale_codiert == True:
-            self.dict_code_checkboxes = self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich
+            self.dict_code_checkboxes = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale
             self.tmp_vorsilbe = 'Diskriminierungsmerkmale'
             self.grafiktitel = 'Diskriminierungsmerkmale'
             self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
@@ -2254,6 +2311,8 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
             self.tabelle_univariat()
             self.ausgangsliste = list(self.dict_code_checkboxes.keys())
             self.df_ergebnis2 = copy.deepcopy(self.df_ergebnis)
+            display("fehler3", self.df_ergebnis)
+            display("fehler2", self.df_ergebnis2)
             self.daten, self.daten_labels, self.fallzahl = data_vorbereiten.data_erstellen(self.df_ergebnis2, "dummies",
                                                                                            "absolut",
                                                                                            ausgangsliste=self.ausgangsliste)
@@ -2487,7 +2546,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                 self.fortschrittbalken_grafiken()
 
         if self.datenspeicher.agg_relevanz_codiert == True:
-            self.dict_code_checkboxes = self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich
+            self.dict_code_checkboxes = self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz
             self.tmp_vorsilbe = 'AGG-Relevanz'
             self.grafiktitel = 'AGG-Relevanz'
             self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
@@ -2520,7 +2579,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
             self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
             self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
                                                           self.dict_code_checkboxes_spalten)
-            self.grafiktitel = "Mehrfachnennung von Diskriminierungsmerkmalen"
+            self.grafiktitel = "Mehrfachnennung nach AGG-Relevanz"
             self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
             self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
                                    dateiname=self.dateiname)
@@ -2697,7 +2756,8 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
     def tabelle_univariat(self):
         self.columns = ['Wert', 'genannt', 'nicht genannt', 'keine Angabe', 'trifft nicht zu']
         self.df_ergebnis = pd.DataFrame(columns=self.columns)
-
+        display("df in Datenspeicher", self.datenspeicher.df)
+        display("self.dict_code_checkboxes", self.dict_code_checkboxes)
         for schlüssel, werte_liste in self.dict_code_checkboxes.items():
             self.haeufigkeit_null = self.datenspeicher.df["XXX_XXX_" + schlüssel].eq(0).sum()
             self.haeufigkeit_eins = self.datenspeicher.df["XXX_XXX_" + schlüssel].eq(1).sum()
@@ -2836,14 +2896,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
         temp_speicher_save.genannt_markierung_nichtzeichen_text_diskriminierungsform = self.datenspeicher.genannt_markierung_nichtzeichen_text_diskriminierungsform
         temp_speicher_save.genannt_markierung_nichtzeichen_text_agg_relevanz = self.datenspeicher.genannt_markierung_nichtzeichen_text_agg_relevanz
 
-
-
         return temp_speicher_save
-
-
-
-
-
 
     def dummies_kreuztabelle(self, dict_code_checkboxes_zeilen, dict_code_checkboxes_spalten):
 
@@ -2995,6 +3048,7 @@ class Application:
         self.app.exec()
 
         print("Erfolg")
+
 
 if __name__ == "__main__":
     application = Application()
