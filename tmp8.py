@@ -378,7 +378,6 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         self.oeffnen_gui_codierfenster()
 
     # Aktualisieren der Fortschrittsbalken
-    # Kann man so machen, suggeriert aber bei fehlerhaftem Einlesen, dass alles ok ist
     def fortschritt_aktualisieren(self):
         if self.datenspeicher.pfad_datengrundlage_einfach != "":
             self.fortschritt_datenauswahl.setValue(50)
@@ -410,6 +409,7 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         temp_speicher_save.dict_code_checkboxes_auswahl_lebensbereich = self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich
         temp_speicher_save.dict_lebensbereiche_vorgabe = self.datenspeicher.dict_lebensbereiche_vorgabe
         temp_speicher_save.codierung_dict_export_lebensbereich = self.datenspeicher.codierung_dict_export_lebensbereich
+
         temp_speicher_save.diskriminierungsmerkmale_codiert = self.datenspeicher.diskriminierungsmerkmale_codiert
         temp_speicher_save.spalten_diskriminierungsmerkmale = self.datenspeicher.spalten_diskriminierungsmerkmale
         temp_speicher_save.trennzeichen_liste_diskriminierungsmerkmale = self.datenspeicher.trennzeichen_liste_diskriminierungsmerkmale
@@ -417,6 +417,7 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         temp_speicher_save.dict_code_checkboxes_auswahl_diskriminierungsmerkmale = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale
         temp_speicher_save.dict_diskriminierungsmerkmale_vorgabe = self.datenspeicher.dict_diskriminierungsmerkmale_vorgabe
         temp_speicher_save.codierung_dict_export_diskriminierungsmerkmale = self.datenspeicher.codierung_dict_export_diskriminierungsmerkmale
+
         temp_speicher_save.interventionsformen_codiert = self.datenspeicher.interventionsformen_codiert
         temp_speicher_save.spalten_interventionsformen = self.datenspeicher.spalten_interventionsformen
         temp_speicher_save.trennzeichen_liste_interventionsformen = self.datenspeicher.trennzeichen_liste_interventionsformen
@@ -424,6 +425,7 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         temp_speicher_save.dict_code_checkboxes_auswahl_interventionsformen = self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen
         temp_speicher_save.dict_interventionsformen_vorgabe = self.datenspeicher.dict_interventionsformen_vorgabe
         temp_speicher_save.codierung_dict_export_interventionsformen = self.datenspeicher.codierung_dict_export_interventionsformen
+
         temp_speicher_save.diskriminierungsform_codiert = self.datenspeicher.diskriminierungsform_codiert
         temp_speicher_save.spalten_diskriminierungsform = self.datenspeicher.spalten_diskriminierungsform
         temp_speicher_save.trennzeichen_liste_diskriminierungsform = self.datenspeicher.trennzeichen_liste_diskriminierungsform
@@ -431,6 +433,7 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         temp_speicher_save.dict_code_checkboxes_auswahl_diskriminierungsform = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform
         temp_speicher_save.dict_diskriminierungsform_vorgabe = self.datenspeicher.dict_diskriminierungsform_vorgabe
         temp_speicher_save.codierung_dict_export_diskriminierungsform = self.datenspeicher.codierung_dict_export_diskriminierungsform
+
         temp_speicher_save.agg_relevanz_codiert = self.datenspeicher.agg_relevanz_codiert
         temp_speicher_save.spalten_agg_relevanz = self.datenspeicher.spalten_agg_relevanz
         temp_speicher_save.trennzeichen_liste_agg_relevanz = self.datenspeicher.trennzeichen_liste_agg_relevanz
@@ -438,6 +441,7 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         temp_speicher_save.dict_code_checkboxes_auswahl_agg_relevanz = self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz
         temp_speicher_save.dict_agg_relevanz_vorgabe = self.datenspeicher.dict_agg_relevanz_vorgabe
         temp_speicher_save.codierung_dict_export_agg_relevanz = self.datenspeicher.codierung_dict_export_agg_relevanz
+
         temp_speicher_save.zeitraum_beginn = self.datenspeicher.zeitraum_beginn
         temp_speicher_save.zeitraum_ende = self.datenspeicher.zeitraum_ende
         temp_speicher_save.zeitraum_inhalt = self.datenspeicher.zeitraum_inhalt
