@@ -1,5 +1,24 @@
 version = '1.0'
 
+"""
+Übersicht der importierten Module (Quelle: Bing-Chat)
+sys: Bietet Zugriff auf einige Variablen, die von Python verwendet werden oder mit dem Python-Interpreter interagieren.
+copy: Bietet Funktionen zum Erstellen von Kopien von Objekten.
+docx: Wird verwendet, um Microsoft Word (.docx) Dateien zu lesen und zu schreiben.
+os: Bietet Funktionen zur Interaktion mit dem Betriebssystem.
+openpyxl: Wird verwendet, um Excel 2010 xlsx/xlsm/xltx/xltm Dateien zu lesen/schreiben.
+pandas: Eine Bibliothek, die leistungsstarke Datenstrukturen bietet, um Datenanalyse und -modellierung zu erleichtern.
+numpy: Eine Bibliothek für die Python-Programmiersprache, die Unterstützung für große, mehrdimensionale Arrays und Matrizen bietet, zusammen mit einer großen Sammlung von mathematischen Funktionen auf hoher Ebene.
+zipfile: Wird verwendet, um ZIP-Archive zu lesen und zu schreiben.
+itertools: Implementiert eine Reihe von Iterator-Bausteinen.
+PySide6, QtCore, QtWidgets, etc.: Sind Teil des Qt-Frameworks für Python und bieten Funktionen zur Erstellung von GUI-Anwendungen.
+matplotlib.pyplot, matplotlib.gridspec, etc.: Sind Teil der Matplotlib-Bibliothek, die für die Erstellung statischer, animierter und interaktiver Visualisierungen in Python verwendet wird.
+re: Bietet Funktionen zur Arbeit mit regulären Ausdrücken.
+pickle: Wird verwendet, um komplexe Python-Objekte zu serialisieren und zu deserialisieren.
+seaborn: Eine Python-Datenvisualisierungsbibliothek auf der Grundlage von Matplotlib. Sie bietet eine High-Level-Schnittstelle für die Erstellung ansprechender und informativer statistischer Grafiken.
+IPython.display: Bietet öffentliche APIs für verschiedene Tools zur Anzeige von Ergebnissen."""
+
+
 import sys
 import copy
 import docx
@@ -21,8 +40,9 @@ from IPython.display import display
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QCheckBox, QVBoxLayout, QHBoxLayout, QWidget, \
     QScrollArea, QGridLayout, QDialogButtonBox, QVBoxLayout, QDialog, QLabel, QSizePolicy, QRadioButton, QLineEdit, \
     QPlainTextEdit, QLineEdit, QTextEdit, QFileDialog, QTreeWidgetItem, QMessageBox
-# import PyQt6.QtWidgets
 from PySide6.QtGui import QIntValidator
+
+# Eigenentwicklungen des Designs und Auslagerungen für Grafikerstellungen
 from UI.Windows.gui_mainwindow import Ui_MainWindow
 from UI.Windows.gui_fenster_datengrundlage_einfach import Ui_fenster_datengrundlage_einfach
 from UI.Windows.gui_codierfenster import Ui_fenster_codieren
@@ -30,7 +50,6 @@ from UI.Windows.gui_zeitraum_festlegen import Ui_fenster_zeitraum_festlegen
 from UI.Windows.gui_ausfuellhinweise import Ui_fenster_ausfuellhinweise
 from UI.Windows.gui_fenster_datenausgabe import Ui_fenster_datenausgabe
 from data_fuer_grafik_vorbereiten import Data_Fuer_Grafik_Vorbereiten
-
 data_vorbereiten = Data_Fuer_Grafik_Vorbereiten()
 from grafik_erstellen import Grafik_Erstellen
 
