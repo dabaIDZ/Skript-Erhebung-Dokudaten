@@ -144,7 +144,7 @@ class Datenspeicher:
             "keine Angabe - Lebensbereich": [],
             "ignorieren - Lebensbereich": []
         }
-        self.dict_lebensbereiche_codierung = {}
+
         self.spalten_diskriminierungsmerkmale = []
         self.trennzeichen_liste_diskriminierungsmerkmale = []
         self.genannt_diskriminierungsmerkmale = False
@@ -186,6 +186,7 @@ class Datenspeicher:
             "keine Angabe - Diskriminierungsmerkmal": [],
             "ignorieren - Diskriminierungsmerkmal": []
         }
+
         self.spalten_interventionsformen = []
         self.trennzeichen_liste_interventionsformen = []
         self.genannt_interventionsformen = False
@@ -202,6 +203,7 @@ class Datenspeicher:
             "keine Angabe - Interventionsformen": [],
             "ignorieren - Interventionsformen": []
         }
+
         self.spalten_diskriminierungsform = []
         self.trennzeichen_liste_diskriminierungsform = []
         self.genannt_diskriminierungsform = False
@@ -223,6 +225,7 @@ class Datenspeicher:
             "keine Angabe - Diskriminierungsform": [],
             "ignorieren - Diskriminierungsform": []
         }
+
         self.spalten_agg_relevanz = []
         self.trennzeichen_liste_agg_relevanz = []
         self.genannt_agg_relevanz = False
