@@ -938,8 +938,9 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         self.frm_main = frm_main
         self.tmp_vars_erstellen()
         self.funktionalitaet()
-        self.werte_füllen(codier_datenspeicher)
+
         self.werte_auswahl(codier_datenspeicher)
+        self.werte_füllen(codier_datenspeicher)
         self.scroll_widget = None
         self.adjust_horizontal_layout()
         self.kategorien_bereits_ausgewählt = self.bereits_ausgewählt(self.datenspeicher)
@@ -974,6 +975,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         self.layout = QVBoxLayout()
         self.layout2 = QVBoxLayout()
         self.first_run = True
+        self.spaltenauswahl_funktionalität = False
         self.tmp_spalten_auswahl = []  # Alle als Auswahl markierten Spalten (noch nicht gespeichert) in denen sich zu codierende Werte befinden
         self.spalten_auswahl = []  # Alle als Auswahl gespeicherten Spalten in denen sich zu codierende Werte befinden
         self.genannt = False  # Information, darüber, ob sich um genannt/nicht genannt Spalten handelt
@@ -1103,10 +1105,14 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         self.listWidget_Spalten.addItems(datenspeicher.spalten_gesamt)
         for index in range(self.listWidget_Spalten.count()):
             item = self.listWidget_Spalten.item(index)
+            print("Spaltenauswahl", self.tmp_spalten_auswahl)
             for spalte in self.tmp_spalten_auswahl:
+                print("suche", item.text(), "!=", spalte)
                 if item.text() == spalte:
                     item.setSelected(True)
+                    print("Spalte gefunden", spalte)
         self.checkbox_codierung_füllen()
+        self.spaltenauswahl_funktionalität = True
 
     def trennzeichen_lesen(self):
         if self.trennzeichen_liste == []:
@@ -1127,8 +1133,9 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
     #   SpaltenName [längster Spalteninhalt]
     #   Dargestellt ist jeweils ein Spalteneintrag als Beispiel in eckigen Klammern.
     def update_tmp_spalten_auswahl(self):
-        selected_items = self.listWidget_Spalten.selectedItems()
-        self.tmp_spalten_auswahl = [item.text() for item in selected_items]
+        if self.spaltenauswahl_funktionalität == True:
+            selected_items = self.listWidget_Spalten.selectedItems()
+            self.tmp_spalten_auswahl = [item.text() for item in selected_items]
 
         self.laengste_auspraegungen_str_spalten = self.spalteninhalt_laengste(anzahl=1, oneline=True)
         self.text_spaltenauswahl.setTextFormat(Qt.RichText)
