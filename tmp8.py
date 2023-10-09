@@ -697,7 +697,13 @@ class FRM_datengrundlage_einfach(QMainWindow, Ui_fenster_datengrundlage_einfach)
     def speichern(self):
         self.datenspeicher.pfad_datengrundlage_einfach = self.tmp_pfad_datengrundlage_einfach
         self.frm_main.fortschritt_aktualisieren()
-        self.datenspeicher.df_original = pd.read_excel(self.datenspeicher.pfad_datengrundlage_einfach, dtype=str)
+        if self.datenspeicher.pfad_datengrundlage_einfach.endswith('.csv'):
+            # Wenn es sich um eine CSV-Datei handelt
+            self.datenspeicher.df_original = pd.read_csv(self.datenspeicher.pfad_datengrundlage_einfach, delimiter=None, engine='python', header=0, encoding='utf-8')
+        elif self.datenspeicher.pfad_datengrundlage_einfach.endswith('.xlsx'):
+            # Wenn es sich um eine Excel-Datei handelt
+            self.datenspeicher.df_original = pd.read_excel(self.datenspeicher.pfad_datengrundlage_einfach, dtype=str)
+        #self.datenspeicher.df_original = pd.read_excel(self.datenspeicher.pfad_datengrundlage_einfach, dtype=str)
         self.datenspeicher.datengrundlage_eingelesen = True
         self.datenspeicher.spalten_gesamt = self.datenspeicher.df_original.columns.tolist()
         self.datenspeicher.df = copy.deepcopy(self.datenspeicher.df_original)
