@@ -2199,6 +2199,22 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
         if not os.path.exists(self.ordner_pfad):
             os.makedirs(self.ordner_pfad)
 
+        self.ordner_pfad = self.datenspeicher.pfad_datenausgabe + "/" + "01 Informationen für die Beratungsstelle" + "/" + "Vertiefung Lebensbereiche"
+        if not os.path.exists(self.ordner_pfad):
+            os.makedirs(self.ordner_pfad)
+        self.ordner_pfad = self.datenspeicher.pfad_datenausgabe + "/" + "01 Informationen für die Beratungsstelle" + "/" + "Vertiefung Diskriminierungsmerkmale"
+        if not os.path.exists(self.ordner_pfad):
+            os.makedirs(self.ordner_pfad)
+        self.ordner_pfad = self.datenspeicher.pfad_datenausgabe + "/" + "01 Informationen für die Beratungsstelle" + "/" + "Vertiefung Interventionsformen"
+        if not os.path.exists(self.ordner_pfad):
+            os.makedirs(self.ordner_pfad)
+        self.ordner_pfad = self.datenspeicher.pfad_datenausgabe + "/" + "01 Informationen für die Beratungsstelle" + "/" + "Vertiefung Diskriminierungsform"
+        if not os.path.exists(self.ordner_pfad):
+            os.makedirs(self.ordner_pfad)
+        self.ordner_pfad = self.datenspeicher.pfad_datenausgabe + "/" + "01 Informationen für die Beratungsstelle" + "/" + "Vertiefung AGG Relevanz"
+        if not os.path.exists(self.ordner_pfad):
+            os.makedirs(self.ordner_pfad)
+
         self.gesamtzahl_grafiken = 0
         self.aktuelle_grafiken = 0
         if self.datenspeicher.lebensbereich_codiert == True:
@@ -2280,7 +2296,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
             self.dict_code_checkboxes = self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich
             self.tmp_vorsilbe = 'Lebensbereiche'
             self.grafiktitel = 'Lebensbereiche'
-            self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.dateiname = '01 ' + self.saubere_dateinamen_string(self.grafiktitel)
             self.untertitel = 'Beratungsfälle nach Lebensbereichen, 2022'
             self.tabelle_univariat()
             self.ausgangsliste = list(self.dict_code_checkboxes.keys())
@@ -2289,7 +2305,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                            "absolut",
                                                                                            ausgangsliste=self.ausgangsliste)
             self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="absolut", reihenfolge="",
+                                 dateiname= self.dateiname, datentyp="dummies", abs_rel="absolut", reihenfolge="",
                                  titel=self.grafiktitel, untertitel=self.untertitel, kreuzung=False)
             self.fortschrittbalken_grafiken()
             for bereich, values in self.dict_code_checkboxes.items():
@@ -2301,66 +2317,66 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    "dummies", "absolut",
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                         dateiname="Lebensbereich " + self.dateiname, datentyp="dummies",
+                                         dateiname= "Vertiefung Lebensbereiche/" + "Lebensbereich " + self.dateiname, datentyp="dummies",
                                          abs_rel="absolut", reihenfolge="", titel="Lebensbereich: " + bereich,
                                          untertitel="Beratungsfälle nach Lebensbereich, 2022", kreuzung=False)
                     self.fortschrittbalken_grafiken()
 
             self.dict_code_checkboxes_zeilen = self.dict_code_checkboxes
             self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                          self.dict_code_checkboxes_spalten)
             self.grafiktitel = "Mehrfachnennung von Lebensbereichen"
             self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                          self.dict_code_checkboxes_spalten)
             self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                   dateiname=self.dateiname)
+                                   dateiname= "Vertiefung Lebensbereiche/" + self.dateiname)
             self.fortschrittbalken_grafiken()
             if self.datenspeicher.diskriminierungsmerkmale_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Lebensbereiche nach Diskriminierungsmerkmalen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Lebensbereiche/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.interventionsformen_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Lebensbereiche nach Interventionsformen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Lebensbereiche/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.diskriminierungsform_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Lebensbereiche nach Diskriminierungsform"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Lebensbereiche/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.agg_relevanz_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Lebensbereiche nach AGG-Relevanz"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Lebensbereiche/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
 
         if self.datenspeicher.diskriminierungsmerkmale_codiert == True:
             self.dict_code_checkboxes = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale
             self.tmp_vorsilbe = 'Diskriminierungsmerkmale'
             self.grafiktitel = 'Diskriminierungsmerkmale'
-            self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.dateiname = '02 ' + self.saubere_dateinamen_string(self.grafiktitel)
             self.untertitel = 'Beratungsfälle nach Diskriminierungsmerkmalen, 2022'
             self.tabelle_univariat()
             self.ausgangsliste = list(self.dict_code_checkboxes.keys())
@@ -2383,7 +2399,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    "dummies", "absolut",
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                         dateiname="Diskriminierungsmerkmale " + self.dateiname, datentyp="dummies",
+                                         dateiname= "Vertiefung Diskriminierungsmerkmale/" + "Diskriminierungsmerkmale " + self.dateiname, datentyp="dummies",
                                          abs_rel="absolut", reihenfolge="", titel="Diskriminierungsmerkmal: " + bereich,
                                          untertitel="Beratungsfälle nach Diskriminierungsmerkmalen, 2022",
                                          kreuzung=False)
@@ -2391,59 +2407,59 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
 
             self.dict_code_checkboxes_zeilen = self.dict_code_checkboxes
             self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                          self.dict_code_checkboxes_spalten)
             self.grafiktitel = "Mehrfachnennung von Diskriminierungsmerkmalen"
             self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                          self.dict_code_checkboxes_spalten)
             self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                   dateiname=self.dateiname)
+                                   dateiname= "Vertiefung Diskriminierungsmerkmale/" + self.dateiname)
             self.fortschrittbalken_grafiken()
             if self.datenspeicher.lebensbereich_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Diskriminierungsmerkmale nach Lebensbereichen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Diskriminierungsmerkmale/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.interventionsformen_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Diskriminierungsmerkmale nach Interventionsformen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Diskriminierungsmerkmale/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.diskriminierungsform_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Diskriminierungsmerkmale nach Diskriminierungsform"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Diskriminierungsmerkmale/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.agg_relevanz_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Diskriminierungsmerkmale nach AGG-Relevanz"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Diskriminierungsmerkmale/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
 
         if self.datenspeicher.interventionsformen_codiert == True:
             self.dict_code_checkboxes = self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen
             self.tmp_vorsilbe = 'Interventionsformen'
             self.grafiktitel = 'Interventionsformen'
-            self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.dateiname = '03 ' + self.saubere_dateinamen_string(self.grafiktitel)
             self.untertitel = 'Beratungsfälle nach Interventionsformen, 2022'
             self.tabelle_univariat()
             self.ausgangsliste = list(self.dict_code_checkboxes.keys())
@@ -2464,66 +2480,66 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    "dummies", "absolut",
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                         dateiname="Interventionsformen " + self.dateiname, datentyp="dummies",
+                                         dateiname= "Vertiefung Interventionsformen/" + "Interventionsformen " + self.dateiname, datentyp="dummies",
                                          abs_rel="absolut", reihenfolge="", titel="Interventionsform: " + bereich,
                                          untertitel="Beratungsfälle nach Interventionsformen, 2022", kreuzung=False)
                     self.fortschrittbalken_grafiken()
 
             self.dict_code_checkboxes_zeilen = self.dict_code_checkboxes
             self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                          self.dict_code_checkboxes_spalten)
             self.grafiktitel = "Mehrfachnennung von Interventionsformen"
             self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                          self.dict_code_checkboxes_spalten)
             self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                   dateiname=self.dateiname)
+                                   dateiname= "Vertiefung Interventionsformen/" + self.dateiname)
             self.fortschrittbalken_grafiken()
             if self.datenspeicher.lebensbereich_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Interventionsformen nach Lebensbereichen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Interventionsformen/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.diskriminierungsmerkmale_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Interventionsformen nach Diskriminierungsmerkmalen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Interventionsformen/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.diskriminierungsform_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Interventionsformen nach Diskriminierungsform"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Interventionsformen/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.agg_relevanz_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Interventionsformen nach AGG-Relevanz"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Interventionsformen/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
 
         if self.datenspeicher.diskriminierungsform_codiert == True:
             self.dict_code_checkboxes = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform
             self.tmp_vorsilbe = 'Diskriminierungsform'
             self.grafiktitel = 'Diskriminierungsform'
-            self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.dateiname = '04 ' + self.saubere_dateinamen_string(self.grafiktitel)
             self.untertitel = 'Beratungsfälle nach Diskriminierungsform, 2022'
             self.tabelle_univariat()
             self.ausgangsliste = list(self.dict_code_checkboxes.keys())
@@ -2544,66 +2560,66 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    "dummies", "absolut",
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                         dateiname="Diskriminierungsform " + self.dateiname, datentyp="dummies",
+                                         dateiname= "Vertiefung Diskriminierungsform/" + "Diskriminierungsform " + self.dateiname, datentyp="dummies",
                                          abs_rel="absolut", reihenfolge="", titel="Diskriminierungsform: " + bereich,
                                          untertitel="Beratungsfälle nach Diskriminierungsform, 2022", kreuzung=False)
                     self.fortschrittbalken_grafiken()
 
             self.dict_code_checkboxes_zeilen = self.dict_code_checkboxes
             self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                          self.dict_code_checkboxes_spalten)
             self.grafiktitel = "Mehrfachnennung von Diskriminierungsformen"
             self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                          self.dict_code_checkboxes_spalten)
             self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                   dateiname=self.dateiname)
+                                   dateiname= "Vertiefung Diskriminierungsform/" + self.dateiname)
             self.fortschrittbalken_grafiken()
             if self.datenspeicher.lebensbereich_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Diskriminierungsformen nach Lebensbereichen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Diskriminierungsform/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.interventionsformen_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Diskriminierungsformen nach Interventionsformen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Diskriminierungsform/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.diskriminierungsmerkmale_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Diskriminierungsformen nach Diskriminierungsmerkmal"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Diskriminierungsform/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.agg_relevanz_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "Diskriminierungsformen nach AGG-Relevanz"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung Diskriminierungsform/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
 
         if self.datenspeicher.agg_relevanz_codiert == True:
             self.dict_code_checkboxes = self.datenspeicher.dict_code_checkboxes_auswahl_agg_relevanz
             self.tmp_vorsilbe = 'AGG-Relevanz'
             self.grafiktitel = 'AGG-Relevanz'
-            self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.dateiname = '05 ' + self.saubere_dateinamen_string(self.grafiktitel)
             self.untertitel = 'Beratungsfälle nach AGG-Relevanz, 2022'
             self.tabelle_univariat()
             self.ausgangsliste = list(self.dict_code_checkboxes.keys())
@@ -2624,59 +2640,59 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    "dummies", "absolut",
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                         dateiname="AGG Relevanz " + self.dateiname, datentyp="dummies",
+                                         dateiname= "Vertiefung AGG Relevanz/" + "AGG Relevanz " + self.dateiname, datentyp="dummies",
                                          abs_rel="absolut", reihenfolge="", titel="AGG-Relevanz: " + bereich,
                                          untertitel="Beratungsfälle nach AGG-Relevanz, 2022", kreuzung=False)
                     self.fortschrittbalken_grafiken()
 
             self.dict_code_checkboxes_zeilen = self.dict_code_checkboxes
             self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                          self.dict_code_checkboxes_spalten)
             self.grafiktitel = "Mehrfachnennung nach AGG-Relevanz"
             self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+            self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                          self.dict_code_checkboxes_spalten)
             self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                   dateiname=self.dateiname)
+                                   dateiname= "Vertiefung AGG Relevanz/" + self.dateiname)
             self.fortschrittbalken_grafiken()
             if self.datenspeicher.lebensbereich_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_lebensbereich
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "AGG-Relevanz nach Lebensbereichen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung AGG Relevanz/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.interventionsformen_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_interventionsformen
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "AGG-Relevanz nach Interventionsformen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung AGG Relevanz/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.diskriminierungsform_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsform
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "AGG-Relevanz nach Diskriminierungsform"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung AGG Relevanz/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
             if self.datenspeicher.diskriminierungsmerkmale_codiert == True:
                 self.dict_code_checkboxes_zeilen = self.datenspeicher.dict_code_checkboxes_auswahl_diskriminierungsmerkmale
                 self.dict_code_checkboxes_spalten = self.dict_code_checkboxes
-                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
-                                                              self.dict_code_checkboxes_spalten)
                 self.grafiktitel = "AGG-Relevanz nach Diskriminierungsmerkmalen"
                 self.dateiname = self.saubere_dateinamen_string(self.grafiktitel)
+                self.kreuztabelle = self.dummies_kreuztabelle(self.dict_code_checkboxes_zeilen,
+                                                              self.dict_code_checkboxes_spalten)
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
-                                       dateiname=self.dateiname)
+                                       dateiname= "Vertiefung AGG Relevanz/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
         self.close()
 
