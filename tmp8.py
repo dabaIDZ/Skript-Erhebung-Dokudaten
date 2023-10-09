@@ -2289,7 +2289,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                            "absolut",
                                                                                            ausgangsliste=self.ausgangsliste)
             self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="relativ", reihenfolge="",
+                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="absolut", reihenfolge="",
                                  titel=self.grafiktitel, untertitel=self.untertitel, kreuzung=False)
             self.fortschrittbalken_grafiken()
             for bereich, values in self.dict_code_checkboxes.items():
@@ -2302,7 +2302,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
                                          dateiname="Lebensbereich " + self.dateiname, datentyp="dummies",
-                                         abs_rel="relativ", reihenfolge="", titel="Lebensbereich: " + bereich,
+                                         abs_rel="absolut", reihenfolge="", titel="Lebensbereich: " + bereich,
                                          untertitel="Beratungsfälle nach Lebensbereich, 2022", kreuzung=False)
                     self.fortschrittbalken_grafiken()
 
@@ -2371,7 +2371,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                            "absolut",
                                                                                            ausgangsliste=self.ausgangsliste)
             self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="relativ", reihenfolge="",
+                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="absolut", reihenfolge="",
                                  titel=self.grafiktitel, untertitel=self.untertitel, kreuzung=False)
             self.fortschrittbalken_grafiken()
             for bereich, values in self.dict_code_checkboxes.items():
@@ -2384,7 +2384,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
                                          dateiname="Diskriminierungsmerkmale " + self.dateiname, datentyp="dummies",
-                                         abs_rel="relativ", reihenfolge="", titel="Diskriminierungsmerkmal: " + bereich,
+                                         abs_rel="absolut", reihenfolge="", titel="Diskriminierungsmerkmal: " + bereich,
                                          untertitel="Beratungsfälle nach Diskriminierungsmerkmalen, 2022",
                                          kreuzung=False)
                     self.fortschrittbalken_grafiken()
@@ -2452,7 +2452,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                            "absolut",
                                                                                            ausgangsliste=self.ausgangsliste)
             self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="relativ", reihenfolge="",
+                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="absolut", reihenfolge="",
                                  titel=self.grafiktitel, untertitel=self.untertitel, kreuzung=False)
             self.fortschrittbalken_grafiken()
             for bereich, values in self.dict_code_checkboxes.items():
@@ -2465,7 +2465,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
                                          dateiname="Interventionsformen " + self.dateiname, datentyp="dummies",
-                                         abs_rel="relativ", reihenfolge="", titel="Interventionsform: " + bereich,
+                                         abs_rel="absolut", reihenfolge="", titel="Interventionsform: " + bereich,
                                          untertitel="Beratungsfälle nach Interventionsformen, 2022", kreuzung=False)
                     self.fortschrittbalken_grafiken()
 
@@ -2532,7 +2532,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                            "absolut",
                                                                                            ausgangsliste=self.ausgangsliste)
             self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="relativ", reihenfolge="",
+                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="absolut", reihenfolge="",
                                  titel=self.grafiktitel, untertitel=self.untertitel, kreuzung=False)
             self.fortschrittbalken_grafiken()
             for bereich, values in self.dict_code_checkboxes.items():
@@ -2545,7 +2545,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
                                          dateiname="Diskriminierungsform " + self.dateiname, datentyp="dummies",
-                                         abs_rel="relativ", reihenfolge="", titel="Diskriminierungsform: " + bereich,
+                                         abs_rel="absolut", reihenfolge="", titel="Diskriminierungsform: " + bereich,
                                          untertitel="Beratungsfälle nach Diskriminierungsform, 2022", kreuzung=False)
                     self.fortschrittbalken_grafiken()
 
@@ -2612,7 +2612,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                            "absolut",
                                                                                            ausgangsliste=self.ausgangsliste)
             self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
-                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="relativ", reihenfolge="",
+                                 dateiname=self.dateiname, datentyp="dummies", abs_rel="absolut", reihenfolge="",
                                  titel=self.grafiktitel, untertitel=self.untertitel, kreuzung=False)
             self.fortschrittbalken_grafiken()
             for bereich, values in self.dict_code_checkboxes.items():
@@ -2625,7 +2625,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                                                                                    ausgangsliste=self.ausgangsliste)
                     self.graph_univariat(daten=self.daten, daten_labels=self.daten_labels, fallzahl=self.fallzahl,
                                          dateiname="AGG Relevanz " + self.dateiname, datentyp="dummies",
-                                         abs_rel="relativ", reihenfolge="", titel="AGG-Relevanz: " + bereich,
+                                         abs_rel="absolut", reihenfolge="", titel="AGG-Relevanz: " + bereich,
                                          untertitel="Beratungsfälle nach AGG-Relevanz, 2022", kreuzung=False)
                     self.fortschrittbalken_grafiken()
 
