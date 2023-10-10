@@ -219,7 +219,7 @@ class Datenspeicher:
             "Sexualisierte Belästigung": [],
             "Anweisung zur Diskriminierung": [],
             "Benachteiligung wegen einer Diskriminierungsbeschwerde/ Viktiminisierung": [],
-            "Starftatbestand": [],
+            "Straftatbestand": [],
             "Grenzüberschreitungen / Alltagsdiskriminierung / Mikroagressionen / Othering": [],
             "anderes - Diskriminierungsform": [],
             "keine Angabe - Diskriminierungsform": [],
@@ -1325,7 +1325,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
     def beispiel_string_setzen_genannt(self):
         spalte = self.tmp_spalten_auswahl[0]
         self.label_genannt_beispiele.setText(
-            'Beispiel: \nSpalte: ' + spalte + '\nZelleninhalt: ' + self.datenspeicher.df_original[spalte].iloc[0])
+            'Beispiel: \nSpalte: ' + spalte + '\nZelleninhalt: ' + str(self.datenspeicher.df_original[spalte].iloc[0]))
 
     def beispiele_trennzeichen_aktualisieren(self):
         self.laengste_auspraegungen_str_spalten = self.spalteninhalt_laengste(anzahl=3, oneline=False)
