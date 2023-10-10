@@ -1,5 +1,5 @@
-version = '1.0'
-
+version = '1.01'
+print("Das Programm startet... Bitte einen kurzen Moment Geduld...")
 """
 Übersicht der importierten Module (Quelle: Bing-Chat)
 sys: Bietet Zugriff auf einige Variablen, die von Python verwendet werden oder mit dem Python-Interpreter interagieren.
@@ -2135,7 +2135,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                     if not isinstance(self.datenspeicher.df.at[index, 'XXX_YYY_' + spalte], list):
                         self.datenspeicher.df.at[index, 'XXX_YYY_' + spalte] = [
                             self.datenspeicher.df.at[index, 'XXX_YYY_' + spalte]]
-            # Übersetzung vonehmen und als 1 markieren, wenn genannt
+            # Übersetzung vornehmen und als 1 markieren, wenn genannt
             for spalte in self.gesamtliste_aller_codes:
                 print("neuertestversuch: a")
                 for index, row in self.datenspeicher.df.iterrows():
@@ -2150,23 +2150,23 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                                         for element9 in einfache_liste:
                                             self.datenspeicher.df.at[index, 'XXX_XXX_' + str(element9)] = 1
                                             print(self.datenspeicher.df['XXX_XXX_' + str(element9)])
-            # Nullsetzen von Werten, wenn ein Wert aus dem Key genannt
-            for schlüssel, werte_liste in dict_code_checkboxes_auswahl.items():
-                for value2 in werte_liste:
-                    for value in werte_liste:
-                        self.datenspeicher.df.loc[(self.datenspeicher.df["XXX_XXX_" + value2] == 1) & (
-                            self.datenspeicher.df["XXX_XXX_" + value].isnull()), "XXX_XXX_" + value] = 0
-            # Nullsetzen von Keys, wenn ein Key genannt
-            for schlüssel, werte_liste in dict_code_checkboxes_auswahl.items():
-                for schlüssel2, werte_liste2 in dict_code_checkboxes_auswahl.items():
-                    self.datenspeicher.df.loc[(self.datenspeicher.df["XXX_XXX_" + schlüssel] == 1) & (
-                        self.datenspeicher.df["XXX_XXX_" + schlüssel2].isnull()), "XXX_XXX_" + schlüssel2] = 0
-            # Auf 97-setzen, wenn Key genannt aber kein Wert ausgewählt
-            for schlüssel, werte_liste in dict_code_checkboxes_auswahl.items():
+        # Nullsetzen von Werten, wenn ein Wert aus dem Key genannt
+        for schlüssel, werte_liste in dict_code_checkboxes_auswahl.items():
+            for value2 in werte_liste:
                 for value in werte_liste:
-                    for value2 in werte_liste:
-                        self.datenspeicher.df.loc[(self.datenspeicher.df["XXX_XXX_" + schlüssel] == 1) & (
-                            self.datenspeicher.df["XXX_XXX_" + value].isnull()), "XXX_XXX_" + value2] = 97
+                    self.datenspeicher.df.loc[(self.datenspeicher.df["XXX_XXX_" + value2] == 1) & (
+                        self.datenspeicher.df["XXX_XXX_" + value].isnull()), "XXX_XXX_" + value] = 0
+        # Nullsetzen von Keys, wenn ein Key genannt
+        for schlüssel, werte_liste in dict_code_checkboxes_auswahl.items():
+            for schlüssel2, werte_liste2 in dict_code_checkboxes_auswahl.items():
+                self.datenspeicher.df.loc[(self.datenspeicher.df["XXX_XXX_" + schlüssel] == 1) & (
+                    self.datenspeicher.df["XXX_XXX_" + schlüssel2].isnull()), "XXX_XXX_" + schlüssel2] = 0
+        # Auf 97-setzen, wenn Key genannt aber kein Wert ausgewählt
+        for schlüssel, werte_liste in dict_code_checkboxes_auswahl.items():
+            for value in werte_liste:
+                for value2 in werte_liste:
+                    self.datenspeicher.df.loc[(self.datenspeicher.df["XXX_XXX_" + schlüssel] == 1) & (
+                        self.datenspeicher.df["XXX_XXX_" + value].isnull()), "XXX_XXX_" + value2] = 97
 
     def werte_füllen(self, datenspeicher):
         if self.datenspeicher.pfad_datenausgabe != "":
