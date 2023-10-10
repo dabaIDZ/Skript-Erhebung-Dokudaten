@@ -2694,6 +2694,7 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                 self.heatmap_erstellen(kreuztabelle=self.kreuztabelle, grafiktitel=self.grafiktitel,
                                        dateiname= "Vertiefung AGG Relevanz/" + self.dateiname)
                 self.fortschrittbalken_grafiken()
+        self.template_speichern()
         self.close()
 
     def fortschrittbalken_grafiken(self):
@@ -2966,6 +2967,20 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
         temp_speicher_save.genannt_markierung_nichtzeichen_text_diskriminierungsform = self.datenspeicher.genannt_markierung_nichtzeichen_text_diskriminierungsform
         temp_speicher_save.genannt_markierung_nichtzeichen_text_agg_relevanz = self.datenspeicher.genannt_markierung_nichtzeichen_text_agg_relevanz
 
+
+        # generates a string to get a readable representation of temp_speicher_save
+        textual_representation = str(temp_speicher_save.__dict__)
+
+        options = QFileDialog.Options()
+        dateipfad_zum_speichern = self.datenspeicher.pfad_datenausgabe + "/" + "01 Informationen für die Beratungsstelle" + "/vorlage"
+
+        if dateipfad_zum_speichern:
+            # Der Benutzer hat einen Speicherort ausgewählt
+            with open(dateipfad_zum_speichern + ".pkl", 'wb') as datei:
+                pickle.dump(temp_speicher_save, datei)
+                # save textual representation of temp_speicher_save in a txt file
+                with open(dateipfad_zum_speichern + ".txt", "w") as text_file:
+                    text_file.write(textual_representation)
         return temp_speicher_save
 
     def dummies_kreuztabelle(self, dict_code_checkboxes_zeilen, dict_code_checkboxes_spalten):

@@ -21,8 +21,12 @@ class Data_Fuer_Grafik_Vorbereiten:
                 print(data)
                 daten_labels = (data.Wert).tolist()
                 daten = data['genannt'].to_frame().to_dict(orient='list')
-            df['gesamt'] = df['genannt'] + df['nicht genannt']
-            fallzahl = str(df.loc[1, 'gesamt'])
+            df2 = data
+            df2['gesamt'] = df2['genannt'] + df2['nicht genannt']
+            print(df2)
+            erste_zeile = df2.iloc[0]
+            fallzahl = str(erste_zeile['gesamt'])
+
             
         if datentyp == "ausprägungen":
 
