@@ -1,4 +1,4 @@
-version = '1.01'
+version = '1.02'
 print("Das Programm startet... Bitte einen kurzen Moment Geduld...")
 """
 Übersicht der importierten Module (Quelle: Bing-Chat)
@@ -2167,6 +2167,9 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
                 for value2 in werte_liste:
                     self.datenspeicher.df.loc[(self.datenspeicher.df["XXX_XXX_" + schlüssel] == 1) & (
                         self.datenspeicher.df["XXX_XXX_" + value].isnull()), "XXX_XXX_" + value2] = 97
+
+        display(self.datenspeicher.df)
+        display("danke")
 
     def werte_füllen(self, datenspeicher):
         if self.datenspeicher.pfad_datenausgabe != "":
