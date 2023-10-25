@@ -864,7 +864,7 @@ class FRM_zeitraumfenster(QMainWindow, Ui_fenster_zeitraum_festlegen):
         if is_spalte_selected:
             spalte = self.listWidget_zeitraum_spalten.selectedItems()[0].text()
             beispiel = self.datenspeicher.df_original[spalte].iloc[0]
-            self.label_3.setText('Spalte: ' + spalte + ' --- Beispieleintrag: ' + beispiel)
+            self.label_3.setText('Spalte: ' + spalte + ' --- Beispieleintrag: ' + str(beispiel))
         else:
             self.label_3.setText('Bitte wählen Sie eine Spalte aus')
 
