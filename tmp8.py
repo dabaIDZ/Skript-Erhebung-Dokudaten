@@ -2125,8 +2125,11 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
             # Übersetzung vornehmen und als 1 markieren, wenn genannt
             for spalte in self.gesamtliste_aller_codes:
                 print("neuertestversuch: a")
+                display("spalte", spalte, "ende der spalte")
+                display("test")
                 for index, row in self.datenspeicher.df.iterrows():
                     liste = self.datenspeicher.df.at[index, 'XXX_YYY_' + spalte]
+                    liste = [element.strip() for element in liste]
                     if isinstance(liste, list):
                         for schlüssel, value in codierung_dict_export.items():
                             if schlüssel[0] == spalte:
