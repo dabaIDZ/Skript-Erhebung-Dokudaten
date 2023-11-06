@@ -249,7 +249,7 @@ class Ui_MainWindow(object):
 
         self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setEnabled(False)
+        self.pushButton.setEnabled(True)
         self.pushButton.setGeometry(QRect(370, 600, 111, 20))
         self.version = QLabel(self.centralwidget)
         self.version.setObjectName(u"version")

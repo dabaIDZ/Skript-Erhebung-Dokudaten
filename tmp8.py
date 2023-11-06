@@ -1,4 +1,4 @@
-version = '1.02'
+version = '1.03'
 print("Das Programm startet... Bitte einen kurzen Moment Geduld...")
 """
 Übersicht der importierten Module (Quelle: Bing-Chat)
@@ -49,6 +49,7 @@ from UI.Windows.gui_codierfenster import Ui_fenster_codieren
 from UI.Windows.gui_zeitraum_festlegen import Ui_fenster_zeitraum_festlegen
 from UI.Windows.gui_ausfuellhinweise import Ui_fenster_ausfuellhinweise
 from UI.Windows.gui_fenster_datenausgabe import Ui_fenster_datenausgabe
+from UI.Windows.gui_spezialfunktion import Ui_fenster_spezialfunktion
 from data_fuer_grafik_vorbereiten import Data_Fuer_Grafik_Vorbereiten
 data_vorbereiten = Data_Fuer_Grafik_Vorbereiten()
 from grafik_erstellen import Grafik_Erstellen
@@ -63,6 +64,11 @@ data_vorbereiten = Data_Fuer_Grafik_Vorbereiten()
 
 # Pfad individuell anpassen
 code = '''
+os.chdir(r"C:/Users/steff/PycharmProjects/Skript-Erhebung-Dokudaten")
+os.system("pyside6-uic UI/gui_spezialfunktion.ui -o UI/Windows/gui_spezialfunktion.py")
+'''
+"""
+'''
 os.chdir(r"/Users/felixbajus/Desktop/Arbeit/IDZ")
 os.system("pyside6-uic UI/gui_mainwindow.ui -o UI/Windows/gui_mainwindow.py")
 os.system("pyside6-uic UI/gui_fenster_datengrundlage_einfach.ui -o UI/Windows/gui_fenster_datengrundlage_einfach.py")
@@ -70,7 +76,9 @@ os.system("pyside6-uic UI/gui_codierfenster.ui -o UI/Windows/gui_codierfenster.p
 os.system("pyside6-uic UI/gui_zeitraum_festlegen.ui -o UI/Windows/gui_zeitraum_festlegen.py")
 os.system("pyside6-uic UI/gui_ausfuellhinweise.ui -o UI/Windows/gui_ausfuellhinweise.py")
 os.system("pyside6-uic UI/gui_fenster_datenausgabe.ui -o UI/Windows/gui_fenster_datenausgabe.py")
+os.system("pyside6-uic UI/gui_spezialfunktion.ui -o UI/Windows/gui_spezialfunktion.py")
 '''
+"""
 
 # wenn oben True, dann wird hier die UI-Datei neu eingelesen
 if UI_neueinlesen:
@@ -101,6 +109,9 @@ class Datenspeicher:
 
         self.codierfenster_initialisieren()
         self.eintraege_liste = []
+
+        self.spezialfunktion = ""
+        self.spezial_2022advd_spaltenname = "beratungsstellen"
 
         self.spalten_lebensbereich = []
         self.trennzeichen_liste_lebensbereich = []
@@ -300,6 +311,7 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         self.gui_codierfenster = None
         self.gui_zeitraum = None
         self.gui_datenausgabe = None
+        self.gui_spezialfunktion = None
         self.funktionalitaet()
         self.fortschritt_aktualisieren()
         self.version.setText(f"Version: {version}")
@@ -320,6 +332,8 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         self.button_template_speichern.clicked.connect(self.template_speichern)
         self.button_template_bearbeiten.clicked.connect(self.template_laden)
 
+        self.pushButton.clicked.connect(self.öffnen_spezialfunktion)
+
     def skript_schliessen(self):
         self.app.quit()
 
@@ -338,6 +352,9 @@ class FRM_main(QMainWindow, Ui_MainWindow):
     # Verhalten beim Schließen der Fenster definieren
     def on_datenausgabe_closed(self):
         self.gui_datenausgabe = None
+
+    def on_spezialfunktion_closed(self):
+        self.gui_spezialfunktion = None
 
     # Verhalten beim Öffnen der Fenster definieren
     def oeffnen_gui_codierfenster_lebensbereich(self, datenspeicher):
@@ -614,7 +631,16 @@ class FRM_main(QMainWindow, Ui_MainWindow):
         else:
             self.gui_datenausgabe.activateWindow()
 
-    def oeffnen_gui_zeitraum(self, datenspeicher):
+    def öffnen_spezialfunktion(self, datenspeicher):
+        if self.gui_spezialfunktion is None:
+            self.gui_spezialfunktion = FRM_spezialfunktion(self.datenspeicher, self)
+            self.gui_spezialfunktion.show()
+            self.gui_spezialfunktion.closeEvent = lambda event: self.on_spezialfunktion_closed()
+            self.setEnabled(False)
+        else:
+            self.gui_spezialfunktion.activateWindow()
+
+    def oeffnen_gui_zeitraum(self):
         if self.gui_zeitraum is None:
             self.gui_zeitraum = FRM_zeitraumfenster(self.datenspeicher, self)
             self.gui_zeitraum.show()
@@ -1332,6 +1358,7 @@ class FRM_codierfenster(QMainWindow, Ui_fenster_codieren):
         # Trennzeichen zu liste zusammenfassen
         self.trennzeichen_liste = [self.lineEdit_trennzeichen1_text, self.lineEdit_trennzeichen2_text,
                                    self.lineEdit_trennzeichen3_text]
+        self.trennzeichen_liste = [element.strip() for element in self.trennzeichen_liste]
         #
         self.elemente_vollstaendig_getrennt_einfach = []
         # geht jede ausgewählte Spalte durch
@@ -2182,6 +2209,19 @@ class FRM_datenausgabe(QMainWindow, Ui_fenster_datenausgabe):
 
     def speichern(self):
         self.datenspeicher.pfad_datenausgabe = self.tmp_pfad_datenausgabe
+
+        if self.datenspeicher.spezialfunktion == "2022advd":
+            self.datenspeicher.orginal_pfad_datenausgabe = copy.deepcopy(self.datenspeicher.pfad_datenausgabe)
+            self.datenspeicher.df_original = copy.deepcopy(self.datenspeicher.df)
+            # Erstelle eine Liste aller Elemente die in self.datenspeicher.df in der Spalte beratungsstellen vorkommen und speichere sie in der Liste beratungsstellen
+            # Erstelle eine Schleife über alle Elemente von Liste beratungsstellen, wobei das Listenelement
+            for beratungsstelle in self.datenspeicher.df[self.datenspeicher.spezial_2022advd_spaltenname]:
+                self.datenspeicher.pfad_datenausgabe = self.datenspeicher.orginal_pfad_datenausgabe + "/" + beratungsstelle
+                self.datenspeicher.df = self.datenspeicher.df_original[self.datenspeicher.df_original[self.datenspeicher.spezial_2022advd_spaltenname] == beratungsstelle]
+                self.auswertung_und_ausgaben()
+        else:
+            self.auswertung_und_ausgaben()
+    def auswertung_und_ausgaben(self):
         self.zip_neu_erstellen = True
         self.zip_datei_name = "An IDZ senden.zip"
 
@@ -3049,6 +3089,38 @@ class fehlerfenster(QDialog):
         self.layout.addWidget(ok_button)
 
         self.setLayout(self.layout)
+
+class FRM_spezialfunktion(QMainWindow, Ui_fenster_spezialfunktion):
+
+    # Initialisierung des Fensters
+    def __init__(self, datenspeicher, frm_main):  # frm_main als Argument hinzugefügt
+        super().__init__()
+        self.setupUi(self)
+        self.datenspeicher = datenspeicher
+        self.frm_main = frm_main
+        self.funktionalitaet()
+        self.werte_füllen(datenspeicher)
+
+    # Wenn das Fenster geschlossen wird, wird das Main-Fenster wieder aktiviert
+    def event(self, event):
+        if event.type() == QtCore.QEvent.Close:
+            self.frm_main.enable_frm_main()
+        return super().event(event)
+
+    # On-Klick-Events der Buttons definieren
+    def funktionalitaet(self):
+        self.pushButton_OK.clicked.connect(self.speichern)
+
+    # Wenn der Dateienpfad bereits im Speicher ist, wird er in das Textfeld geschrieben,
+    # sonst wird der soeben ausgewählte Pfad eingetragen
+    def werte_füllen(self, datenspeicher):
+        if self.datenspeicher.spezialfunktion != "":
+            self.line_spezialfunktion.setText(self.datenspeicher.spezialfunktion)
+
+    # Speichern der Daten in den Speicher
+    def speichern(self):
+        self.datenspeicher.spezialfunktion = self.line_spezialfunktion.text()
+        self.close()
 
 
 class FRM_fenster_ausfuellhinweise(QMainWindow, Ui_fenster_ausfuellhinweise):
